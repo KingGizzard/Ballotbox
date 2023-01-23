@@ -26,4 +26,4 @@ truffle migrate --network hyperspace
 truffle migrate --reset --network hyperspace
 ```
 
-> > this process should be followed byfunding the contract with [fundContract.js](../utils/)
+> > this process should be followed by funding the contract with [fundContract.js](../utils/)

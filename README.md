@@ -43,3 +43,10 @@ npm i
 > oracle relays information to each party
 
 > > requires building (ground up)
+
+-----
+-----
+
+ > [hyperspace-faucet](https://hyperspace.yoga/#faucet)
+
+ > [hyperspace-explorer](https://hyperspace.filfox.info/)
