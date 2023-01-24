@@ -10,11 +10,11 @@
 npm i
 ```
 
-> > fill in .example.env with relevant keys
-
 ```
 cp .example.env .env
 ```
+
+> > fill in .env with relevant keys
 
 -----
 
@@ -28,27 +28,19 @@ cp .example.env .env
 
 > this agent asks questions (fully public)
 
-> > requires work on `ipfs/askQuestion.js` : how can we make this file much larger?
-
 ## [agent 2](./agent2/)
 
 > this agent answers questions (anonymous answer, private data)
 
-> > requires work on `ipfs/encryptAnswer.js` : how can we make this bulletproof?
-
 ## [agent 3](./agent3/)
 
 > this agent requests answer data (public question, private response data)
-
-> > requires building (ground up)
 
 -----
 
 ## [oracle](./oracle/)
 
 > oracle relays information to each party, and handles anonymous submission
-
-> > requires building (ground up)
 
 -----
 -----
@@ -59,7 +51,7 @@ cp .example.env .env
 
 > [zk-kit](https://github.com/privacy-scaling-explorations/zk-kit/tree/27284d16bc3e718368d1f5a5d0e9ea4ed26077ef/packages/incremental-merkle-tree.sol/contracts)
 
-> > both can also be found in the node module folder in this directory
+> > both can also be found in `blockchain/node_modules`
 
 -----
 

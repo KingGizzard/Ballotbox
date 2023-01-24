@@ -5,8 +5,6 @@ npm i
 ```
 ------
 
-> add relevant keys to the correct empty spaces, signified by `""`
-
 # compile + deploy to FVM
 
 > deploy initial contracts
@@ -20,3 +18,5 @@ truffle migrate --network hyperspace
 ```
 truffle migrate --reset --network hyperspace
 ```
+
+> this process should be followed by [funding the contracts](../utils/)
