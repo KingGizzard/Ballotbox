@@ -1,20 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@semaphore-protocol/contracts/interfaces/IVerifier.sol";
-import "@semaphore-protocol/contracts/base/SemaphoreCore.sol";
-import "@semaphore-protocol/contracts/base/SemaphoreGroups.sol";
-import "@semaphore-protocol/contracts/extensions/SemaphoreVoting.sol";
+import "@semaphore-protocol/contracts/interfaces/ISemaphoreVoting.sol";
 
-contract Ballotbox is SemaphoreCore, SemaphoreGroups, SemaphoreVoting {
+contract Ballotbox {
 
-    IVerifier public verifier;
-
-    mapping(uint256 => bytes32) users;
-
-    uint256 groupId;
-
-    string currentCID;
+    ISemaphoreVoting semaphorVoting;
 
     struct question {
         address agent1;
@@ -25,44 +16,38 @@ contract Ballotbox is SemaphoreCore, SemaphoreGroups, SemaphoreVoting {
         string CID;
     }
 
+    struct request {
+        string CID;
+        string email;
+    }
+
     mapping (string => question) public questionLedger;
     mapping (string => answer) public answerLedger;
+    mapping (string => request) public requestLedger;
 
-    event emitNewQuestion(
-        address agent1,
-        string CID
-    );
+    string currentCID;
+    request currentRequest;
 
-    event emitNewAnswer(
-        bytes32 feedback
-    );
+    event emitNewQuestion(address agent1, string CID);
+    event emitNewAnswer(bytes32 feedback);
+    event emitNewRequest(address agent3, string CID, string email);
+    event emitPollStarted(string CID);
+    event emitPollFinished(string CID);
 
-    event emitNewMember(
-        uint256 identityCommitment, 
-        bytes32 username
-    );
-
-    constructor (address _verifier, uint256 _groupId)
+    constructor (address _semaphoreVoting)
     {
+        semaphorVoting = ISemaphoreVoting(_semaphoreVoting);
         currentCID = "";
-
-        verifier = IVerifier(_verifier);
-        // using verifier 20
-        _createGroup(_groupId, 20, 0);
-        groupId = _groupId;
     }
 
-    function joinGroup(uint256 identityCommitment, bytes32 username) external {
-        _addMember(groupId, identityCommitment);
-        users[identityCommitment] = username;
-        emit emitNewMember(identityCommitment, username);
-    }
+    ///
+    /// Agent 1 functionality
+    ///
 
-    function newQuestion (
+    function newQuestionBallotbox (
         string memory CID
     ) 
-        public 
-        returns (bool) 
+        public returns (bool) 
     {
         question storage thisQuestion = questionLedger[CID];
         thisQuestion.agent1 = msg.sender;
@@ -72,28 +57,79 @@ contract Ballotbox is SemaphoreCore, SemaphoreGroups, SemaphoreVoting {
         return true;
     }
 
-    function newAnswer(
-        string memory answerCID,
-        bytes32 feedback,
-        uint256 merkleTreeRoot,
-        uint256 nullifierHash,
-        uint256 externalNullifier,
-        uint256[8] calldata proof
-    ) external {
-        _verifyProof(feedback, merkleTreeRoot, nullifierHash, externalNullifier, proof, verifier);
+    ///
+    /// Agent 2 anon-voting functionality
+    ///
 
-        answer storage thisAnswer = answerLedger[currentCID];
-        thisAnswer.CID = answerCID;
-        emit emitNewAnswer(feedback);
+    function createPollBallotbox(
+        uint256 pollId,
+        address coordinator,
+        uint256 merkleTreeDepth
+    ) external{
+        semaphorVoting.createPoll(pollId, coordinator, merkleTreeDepth);
     }
 
-    // TODO - agent 3 functionality
+    function addVoterBallotbox(
+        uint256 pollId, 
+        uint256 identityCommitment
+    ) external {
+        semaphorVoting.addVoter(pollId, identityCommitment);
+    }
+
+    function startPollBallotbox(
+        uint256 pollId, 
+        uint256 encryptionKey
+    ) external {
+        semaphorVoting.startPoll(pollId, encryptionKey);
+        emit emitPollStarted(currentCID);
+    }
+
+    function castVoteBallotbox(
+        bytes32 vote,
+        uint256 nullifierHash,
+        uint256 pollId,
+        uint256[8] calldata proof
+    ) external {
+        semaphorVoting.castVote(vote, nullifierHash, pollId, proof);
+    }
+
+    function endPollBallotbox(
+        uint256 pollId, 
+        uint256 decryptionKey
+    ) external {
+        semaphorVoting.endPoll(pollId, decryptionKey);
+        emit emitPollFinished(currentCID);
+    }
+
+    ///
+    /// Agent 3 functionality
+    ///
+
+    function requestData(string memory CID, string memory email) 
+        public returns (bool) 
+    {
+        request storage thisRequest = requestLedger[CID];
+        thisRequest.CID = CID;
+        thisRequest.email = email;
+        currentRequest = thisRequest;
+        emit emitNewRequest(msg.sender, CID, email);
+        return true;  
+    }
+
+    ///
+    /// general utils
+    ///
 
     function getQuestion() 
-        public view
-        returns (string memory) 
+        public view returns (string memory) 
     {
         return currentCID;
+    }
+
+    function getRequest()
+        public view returns (request memory)
+    {
+        return currentRequest;
     }
 
     function deposit() public payable {}
