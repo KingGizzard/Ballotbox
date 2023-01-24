@@ -58,7 +58,3 @@ cp .example.env .env
  > [hyperspace-explorer](https://hyperspace.filfox.info/)
 
 -----
------
------
-
-> [semaphore](./blockchain/contracts//semaphore/) are forked from [here](https://github.com/hadzija7/ZKVoting/tree/main/contracts/contracts)
