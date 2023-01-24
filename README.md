@@ -53,8 +53,18 @@ cp .example.env .env
 -----
 -----
 
- > [hyperspace-faucet](https://hyperspace.yoga/#faucet)
+### references
 
- > [hyperspace-explorer](https://hyperspace.filfox.info/)
+> [semaphore-protocol](https://github.com/semaphore-protocol/semaphore/blob/a38dd20276a0458a038164480ef21bd4129a7132/packages/contracts/contracts/verifiers/Verifier20.sol)
+
+> [zk-kit](https://github.com/privacy-scaling-explorations/zk-kit/tree/27284d16bc3e718368d1f5a5d0e9ea4ed26077ef/packages/incremental-merkle-tree.sol/contracts)
+
+> > both can also be found in the node module folder in this directory
+
+-----
+
+> [hyperspace-faucet](https://hyperspace.yoga/#faucet)
+
+> [hyperspace-explorer](https://hyperspace.filfox.info/)
 
 -----
