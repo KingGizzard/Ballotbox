@@ -4,8 +4,9 @@ pragma solidity ^0.8.4;
 import "@semaphore-protocol/contracts/interfaces/IVerifier.sol";
 import "@semaphore-protocol/contracts/base/SemaphoreCore.sol";
 import "@semaphore-protocol/contracts/base/SemaphoreGroups.sol";
+import "@semaphore-protocol/contracts/extensions/SemaphoreVoting.sol";
 
-contract Ballotbox is SemaphoreCore, SemaphoreGroups {
+contract Ballotbox is SemaphoreCore, SemaphoreGroups, SemaphoreVoting {
 
     IVerifier public verifier;
 

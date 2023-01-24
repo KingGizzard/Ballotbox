@@ -1,20 +1,30 @@
 const Verifier = artifacts.require("Verifier20");
 const Ballotbox = artifacts.require("Ballotbox");
+const PoseidonT3 = artifacts.require("PoseidonT3");
+const IncrementalBinaryTree = artifacts.require("IncrementalBinaryTree");
 
 const {promises:fs} = require('fs');
 
 module.exports = async function (deployer) {
   await deployer.deploy(Verifier);
   const verifier = await Verifier.deployed();
-  await saveAddress('ballotbox', verifier.address);
+  await saveAddress('verifier', verifier.address);
 
-  await deployer.deploy(Ballotbox, verifier.address)
+  await deployer.deploy(PoseidonT3);
+  await PoseidonT3.deployed();
+
+  deployer.link(PoseidonT3, IncrementalBinaryTree);
+  await deployer.deploy(IncrementalBinaryTree);
+  await IncrementalBinaryTree.deployed();
+  
+  deployer.link(IncrementalBinaryTree, Ballotbox);
+  await deployer.deploy(Ballotbox, verifier.address, 808)
   const ballotbox = await Ballotbox.deployed();
   await saveAddress('ballotbox', ballotbox.address);
 };
 
 async function saveAddress(name, address){
-  await fs.writeFile('./build/filecoin/' + name + "" + "hyperspace.address", address, (err) => {
+  await fs.writeFile('./build/filecoin/' + name + "" + ":hyperspace.address", address, (err) => {
     if (err) throw err;
   });
 }
