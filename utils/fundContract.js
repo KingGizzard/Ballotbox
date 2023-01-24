@@ -2,11 +2,11 @@ import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 import ENV from '../../ENV.json' assert { type: "json" };
-dotenv.config({ path: '../blockchain/.env' });
+dotenv.config({ path: '../../.env' });
 
 let API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
 const web3 = new Web3(API);
-let privateKey = process.env.sk?.trim() || "";
+let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 

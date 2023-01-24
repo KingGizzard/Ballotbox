@@ -1,7 +1,7 @@
 /node_modules/
 package-lock.json
+.env
 
 /blockchain/node_modules/
 /blockchain/build/contracts/
 /blockchain/voteZK/circom/
-/blockchain/.env

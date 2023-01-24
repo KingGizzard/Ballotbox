@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@semaphore-protocol/group": "^2.6.1",
+    "@semaphore-protocol/identity": "^2.6.1",
+    "@semaphore-protocol/proof": "^2.6.1",
     "dotenv": "^16.0.3",
     "ipfs-core": "^0.18.0",
     "web3": "^1.8.1"

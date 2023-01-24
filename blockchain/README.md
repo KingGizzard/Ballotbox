@@ -3,12 +3,7 @@
 ```
 npm i
 ```
-
-# environment set-up
-
-```
-cp .example.env .env
-```
+------
 
 > add relevant keys to the correct empty spaces, signified by `""`
 
@@ -26,4 +21,6 @@ truffle migrate --network hyperspace
 truffle migrate --reset --network hyperspace
 ```
 
-> > this process should be followed by funding the contract with [fundContract.js](../utils/)
+-----
+
+> note : verifier identical to the one [located in dependencies](https://github.com/semaphore-protocol/semaphore/blob/a38dd20276a0458a038164480ef21bd4129a7132/packages/contracts/contracts/verifiers/Verifier20.sol)

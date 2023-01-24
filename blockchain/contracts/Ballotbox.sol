@@ -1,43 +1,60 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "@semaphore-protocol/contracts/interfaces/IVerifier.sol";
+import "@semaphore-protocol/contracts/base/SemaphoreCore.sol";
+import "@semaphore-protocol/contracts/base/SemaphoreGroups.sol";
 
-contract Ballotbox is Initializable {
+contract Ballotbox is SemaphoreCore, SemaphoreGroups {
 
-    address DAO;
-    uint256 subscriptionCost;
+    IVerifier public verifier;
+
+    mapping(uint256 => bytes32) users;
+
+    uint256 groupId;
+
+    string currentCID;
 
     struct question {
         address agent1;
         string CID;
     }
 
-    struct request {
-        address agent3;
+    struct answer {
         string CID;
-        uint256 subscriptionValue;
     }
 
     mapping (string => question) public questionLedger;
-    mapping (string => request) public requestLedger;
+    mapping (string => answer) public answerLedger;
 
     event emitNewQuestion(
         address agent1,
         string CID
     );
 
-    event emitDataRequest (
-        address agent3,
-        string CID
+    event emitNewAnswer(
+        bytes32 feedback
     );
 
-    function Initialize ()
-        public
-        initializer
+    event emitNewMember(
+        uint256 identityCommitment, 
+        bytes32 username
+    );
+
+    constructor (address _verifier, uint256 _groupId)
     {
-        DAO = msg.sender;
-        subscriptionCost = 100;
+        currentCID = "";
+
+        verifier = IVerifier(_verifier);
+        // using verifier 20
+        _createGroup(_groupId, 20, 0);
+        groupId = _groupId;
+    }
+
+    function joinGroup(uint256 identityCommitment, bytes32 username) external {
+        _addMember(groupId, identityCommitment);
+        users[identityCommitment] = username;
+        emit emitNewMember(identityCommitment, username);
     }
 
     function newQuestion (
@@ -49,31 +66,33 @@ contract Ballotbox is Initializable {
         question storage thisQuestion = questionLedger[CID];
         thisQuestion.agent1 = msg.sender;
         thisQuestion.CID = CID;
-    
+        currentCID = CID;
         emit emitNewQuestion(msg.sender, CID);
         return true;
     }
 
-    // TODO - zk functions for agent 2
+    function newAnswer(
+        string memory answerCID,
+        bytes32 feedback,
+        uint256 merkleTreeRoot,
+        uint256 nullifierHash,
+        uint256 externalNullifier,
+        uint256[8] calldata proof
+    ) external {
+        _verifyProof(feedback, merkleTreeRoot, nullifierHash, externalNullifier, proof, verifier);
 
-    function newRequest (
-        string memory CID
-    ) 
-        public
-        payable
-        returns (bool) 
+        answer storage thisAnswer = answerLedger[currentCID];
+        thisAnswer.CID = answerCID;
+        emit emitNewAnswer(feedback);
+    }
+
+    // TODO - agent 3 functionality
+
+    function getQuestion() 
+        public view
+        returns (string memory) 
     {
-        require(msg.value >= subscriptionCost, "payment error");
-
-        request storage thisRequest = requestLedger[CID];
-        thisRequest.agent3 = msg.sender;
-        thisRequest.CID = CID;
-        thisRequest.subscriptionValue = msg.value;
-
-        payable(DAO).transfer(msg.value);
-        
-        emit emitDataRequest(msg.sender, CID);
-        return true;
+        return currentCID;
     }
 
     function deposit() public payable {}

@@ -10,6 +10,12 @@
 npm i
 ```
 
+> > fill in .example.env with relevant keys
+
+```
+cp .example.env .env
+```
+
 -----
 
 ## [blockchain](./blockchain/)
@@ -40,7 +46,7 @@ npm i
 
 ## [oracle](./oracle/)
 
-> oracle relays information to each party
+> oracle relays information to each party, and handles anonymous submission
 
 > > requires building (ground up)
 
@@ -50,3 +56,9 @@ npm i
  > [hyperspace-faucet](https://hyperspace.yoga/#faucet)
 
  > [hyperspace-explorer](https://hyperspace.filfox.info/)
+
+-----
+-----
+-----
+
+> [semaphore](./blockchain/contracts//semaphore/) are forked from [here](https://github.com/hadzija7/ZKVoting/tree/main/contracts/contracts)
