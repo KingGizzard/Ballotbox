@@ -1,8 +1,8 @@
 import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
-import ENV from '../../ENV.json' assert { type: "json" };
-dotenv.config({ path: '../../.env' });
+import ENV from '../ENV.json' assert { type: "json" };
+dotenv.config({ path: '../.env' });
 
 let API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
 const web3 = new Web3(API);
@@ -14,7 +14,7 @@ let amount = process.argv[2];
 
 async function execute () {
     try {
-        const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
+        const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotbox:hyperspace.address", "utf-8");
 
         const abi = await fs_.readFile("../blockchain/build/contracts/Ballotbox.json", "utf-8");
         const ABI = JSON.parse(abi);
