@@ -4,14 +4,12 @@ import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 dotenv.config({ path: '../../.env' });
 
-const cid = await fs_.readFile('../agent1/ipfs/cid.txt');
-const CID = cid.toString();
-
-console.log(CID)
 
 async function produceZKProof () {
+    const CID = "blah" //await fs_.readFile('../agent1/ipfs/cid.txt');
+    const VerifierAddress = "blah" //await fs_.readFile('../blockchain/build/filecoin/verifier::hyperspace.address');
+
     const signal = formatBytes32String(CID);
-    const root = ""; // TODO
     const externalNullifier = 1;
     const fullProof = await generateProof(identity, group, externalNullifier, signal, {
         zkeyFilePath: "../../static/semaphore.zkey",
@@ -19,11 +17,7 @@ async function produceZKProof () {
     });
     const solidityProof = packToSolidityProof(fullProof.proof);
     const { nullifierHash } = fullProof.publicSignals;
-    const verifierAddress = "" // TODO
-
-    let proof = JSON.stringify({signal, root, nullifierHash, externalNullifier, solidityProof, verifierAddress});
-
-    await save('../public/zkAnswer.proof', proof);
+    const verifierAddress = VerifierAddress.toString();
 }
 
 async function save (path, type) {

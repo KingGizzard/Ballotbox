@@ -25,7 +25,7 @@ async function castVote () {
         };
 
         /*
-        await ballotbox.methods.castVote(identityCommitment, username).send(
+        await ballotbox.methods.castVote().send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);
