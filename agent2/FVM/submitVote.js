@@ -10,8 +10,6 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
-let username = process.argv[2];
-
 async function joinGroup () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
@@ -26,6 +24,7 @@ async function joinGroup () {
             gasLimit: 10000000
         };
 
+        /*
         await ballotbox.methods.joinGroup(identityCommitment, username).send(
             transaction , function(err, hash){
                 if(!err){
@@ -35,6 +34,7 @@ async function joinGroup () {
                 }
             }
         );
+        */
 
         console.log("New Quesion Addedß");
         process.exit(1);
