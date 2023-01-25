@@ -30,7 +30,6 @@ contract Ballotbox {
     bool isPoll;
 
     event emitNewQuestion(address agent1, string CID);
-    event emitNewAnswer(bytes32 feedback);
     event emitNewRequest(address agent3, string CID, string email);
     event emitPollStarted(string CID);
     event emitPollFinished(string CID);

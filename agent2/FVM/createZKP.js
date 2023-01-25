@@ -8,6 +8,10 @@ async function produceZKProof () {
     const CID = "blah" //await fs_.readFile('../agent1/ipfs/cid.txt');
     const VerifierAddress = await fs_.readFile('../blockchain/build/filecoin/verifier::hyperspace.address');
 
+    // TODO
+    const identity = "";
+    const group = "";
+
     const signal = formatBytes32String(CID);
     const externalNullifier = 1;
     const fullProof = await generateProof(identity, group, externalNullifier, signal, {
