@@ -4,7 +4,11 @@
     "@semaphore-protocol/identity": "^2.6.1",
     "@semaphore-protocol/proof": "^2.6.1",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "fs": "^0.0.1-security",
     "ipfs-core": "^0.18.0",
+    "openpgp": "^5.5.0",
+    "solc": "^0.8.17",
     "web3": "^1.8.1"
   },
   "type": "module"
