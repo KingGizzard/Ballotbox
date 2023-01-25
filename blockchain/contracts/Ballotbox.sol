@@ -5,7 +5,7 @@ import "@semaphore-protocol/contracts/interfaces/ISemaphoreVoting.sol";
 
 contract Ballotbox {
 
-    ISemaphoreVoting semaphorVoting;
+    ISemaphoreVoting semaphoreVoting;
 
     struct question {
         address agent1;
@@ -27,6 +27,7 @@ contract Ballotbox {
 
     string currentCID;
     request currentRequest;
+    bool isPoll;
 
     event emitNewQuestion(address agent1, string CID);
     event emitNewAnswer(bytes32 feedback);
@@ -34,10 +35,16 @@ contract Ballotbox {
     event emitPollStarted(string CID);
     event emitPollFinished(string CID);
 
+    modifier isPollActive(bool pollStatus) {
+        require(isPoll == pollStatus, "Please ask your question when the poll is in the correct status");
+        _;
+    }
+
     constructor (address _semaphoreVoting)
     {
-        semaphorVoting = ISemaphoreVoting(_semaphoreVoting);
+        semaphoreVoting = ISemaphoreVoting(_semaphoreVoting);
         currentCID = "";
+        isPoll = false;
     }
 
     ///
@@ -47,8 +54,9 @@ contract Ballotbox {
     function newQuestionBallotbox (
         string memory CID
     ) 
-        public returns (bool) 
+        public isPollActive(false) returns (bool) 
     {
+        isPoll = true;
         question storage thisQuestion = questionLedger[CID];
         thisQuestion.agent1 = msg.sender;
         thisQuestion.CID = CID;
@@ -65,22 +73,22 @@ contract Ballotbox {
         uint256 pollId,
         address coordinator,
         uint256 merkleTreeDepth
-    ) external{
-        semaphorVoting.createPoll(pollId, coordinator, merkleTreeDepth);
+    ) external isPollActive(false) {
+        semaphoreVoting.createPoll(pollId, coordinator, merkleTreeDepth);
     }
 
     function addVoterBallotbox(
         uint256 pollId, 
         uint256 identityCommitment
-    ) external {
-        semaphorVoting.addVoter(pollId, identityCommitment);
+    ) external isPollActive(true) {
+        semaphoreVoting.addVoter(pollId, identityCommitment);
     }
 
     function startPollBallotbox(
         uint256 pollId, 
         uint256 encryptionKey
-    ) external {
-        semaphorVoting.startPoll(pollId, encryptionKey);
+    ) external isPollActive(true) {
+        semaphoreVoting.startPoll(pollId, encryptionKey);
         emit emitPollStarted(currentCID);
     }
 
@@ -89,15 +97,16 @@ contract Ballotbox {
         uint256 nullifierHash,
         uint256 pollId,
         uint256[8] calldata proof
-    ) external {
-        semaphorVoting.castVote(vote, nullifierHash, pollId, proof);
+    ) external isPollActive(true) {
+        semaphoreVoting.castVote(vote, nullifierHash, pollId, proof);
     }
 
     function endPollBallotbox(
         uint256 pollId, 
         uint256 decryptionKey
-    ) external {
-        semaphorVoting.endPoll(pollId, decryptionKey);
+    ) external isPollActive(true) {
+        semaphoreVoting.endPoll(pollId, decryptionKey);
+        isPoll = false;
         emit emitPollFinished(currentCID);
     }
 
@@ -105,7 +114,10 @@ contract Ballotbox {
     /// Agent 3 functionality
     ///
 
-    function requestData(string memory CID, string memory email) 
+    function requestData(
+        string memory CID, 
+        string memory email
+    ) 
         public returns (bool) 
     {
         request storage thisRequest = requestLedger[CID];
