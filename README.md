@@ -47,9 +47,9 @@ cp .example.env .env
 
 ### references
 
-> [semaphore-protocol](https://github.com/semaphore-protocol/semaphore/blob/a38dd20276a0458a038164480ef21bd4129a7132/packages/contracts/contracts/verifiers/Verifier20.sol)
+> [semaphore-protocol](https://github.com/semaphore-protocol/semaphore/)
 
-> [zk-kit](https://github.com/privacy-scaling-explorations/zk-kit/tree/27284d16bc3e718368d1f5a5d0e9ea4ed26077ef/packages/incremental-merkle-tree.sol/contracts)
+> [zk-kit](https://github.com/privacy-scaling-explorations/zk-kit/)
 
 > > both can also be found in `blockchain/node_modules`
 
