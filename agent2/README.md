@@ -21,7 +21,4 @@ node ipfs/encryptAnswer.js <answer>
 
 ```
 node FMV/createZKAnswer.js
-node FVM/submitAnswer.js
 ```
-
-> > incomplete : but this will submit agent2's vote privately

@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
-import ENV from '../../ENV.json' assert { type: "json" };
+import ENV from '../../../ENV.json' assert { type: "json" };
 dotenv.config({ path: '../../.env' });
 
 let API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
@@ -10,7 +10,7 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
-async function joinGroup () {
+async function castVote () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
 
@@ -25,7 +25,7 @@ async function joinGroup () {
         };
 
         /*
-        await ballotbox.methods.joinGroup(identityCommitment, username).send(
+        await ballotbox.methods.castVote(identityCommitment, username).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);
@@ -44,4 +44,4 @@ async function joinGroup () {
     }
 }
 
-joinGroup();
+castVote();
