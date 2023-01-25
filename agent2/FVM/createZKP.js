@@ -6,9 +6,7 @@ import {createIdentity} from './createIdentity.js';
 import {createGroup} from './createGroup.js';
 dotenv.config({ path: '../../.env' });
 
-const vote = process.argv[2];
-
-async function produceZKProof () {
+export async function produceZKProof (vote) {
     const identity = await createIdentity();
     const group = await createGroup();
 
@@ -20,6 +18,7 @@ async function produceZKProof () {
     });
     const solidityProof = packToSolidityProof(fullProof.proof);
     console.log(solidityProof);
+    return solidityProof;
     process.exit();
 }
 

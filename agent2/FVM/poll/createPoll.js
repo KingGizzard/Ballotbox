@@ -10,6 +10,8 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
+const pollID = process.argv[2];
+
 async function exec () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
@@ -24,9 +26,8 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        // TODO
-        const pollId = "";
-        const coordinator = "";
+        const pollId = pollID.toString();
+        const coordinator = ENV['entity-addresses'].agent2;
         const merkleTreeDepth = 20;
 
         await ballotbox.methods.createPollBallotbox(pollId, coordinator, merkleTreeDepth).send(

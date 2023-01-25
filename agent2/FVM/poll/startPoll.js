@@ -10,6 +10,8 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
+const pollID = process.argv[2];
+
 async function exec () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
@@ -25,7 +27,7 @@ async function exec () {
         };
 
         // TODO
-        const pollId = "";
+        const pollId = pollID.toString();
         const encryptionKey = "";
 
         await ballotbox.methods.startPollBallotbox(pollId, encryptionKey).send(

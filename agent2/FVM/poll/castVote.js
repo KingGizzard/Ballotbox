@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 import ENV from '../../../ENV.json' assert { type: "json" };
+import {produceZKProof} from '../createZKP';
 dotenv.config({ path: '../../.env' });
 
 let API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
@@ -9,6 +10,9 @@ const web3 = new Web3(API);
 let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
+
+const Vote = process.argv[2];
+const pollID = process.argv[3];
 
 async function exec () {
     try {
@@ -24,11 +28,10 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        // TODO
-        const vote = "";
-        const nullifierHash = "";
-        const pollId = "";
-        const proof = "";
+        const vote = Vote.toString();
+        const nullifierHash = await fs_.readFile('../../private/nullifier.priv', "utf-8");
+        const pollId = pollID.toString();
+        const proof = await produceZKProof(vote);
 
         await ballotbox.methods.castVoteBallotbox(vote, nullifierHash, pollId, proof).send(
             transaction , function(err, hash){

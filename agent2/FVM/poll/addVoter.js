@@ -10,6 +10,9 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
+const pollID = process.argv[2];
+const newVoterCommittment = process.argv[3];
+
 async function exec () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
@@ -24,9 +27,8 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        // TODO
-        const pollId = "";
-        const identityCommitment = "";
+        const pollId = pollID.toString();
+        const identityCommitment = newVoterCommittment.toString();
 
         await ballotbox.methods.addVoterBallotbox(pollId, identityCommitment).send(
             transaction , function(err, hash){
