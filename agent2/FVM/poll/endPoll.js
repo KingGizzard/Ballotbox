@@ -26,9 +26,8 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        // TODO
         const pollId = pollID.toString();
-        const decryptionKey = "";
+        const decryptionKey = ""; // TODO
 
         await ballotbox.methods.endPollBallotbox(pollId, decryptionKey).send(
             transaction , function(err, hash){

@@ -11,7 +11,6 @@ web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
 const pollID = process.argv[2];
-const newVoterCommittment = process.argv[3];
 
 async function exec () {
     try {
@@ -28,6 +27,7 @@ async function exec () {
         };
 
         const pollId = pollID.toString();
+        const newVoterCommittment = await fs_.readFile("./dummies/dummies_0_committment.pub", "utf-8");
         const identityCommitment = newVoterCommittment.toString();
 
         await ballotbox.methods.addVoterBallotbox(pollId, identityCommitment).send(
@@ -40,7 +40,7 @@ async function exec () {
             }
         );
 
-        console.log("New Quesion Addedß");
+        console.log("New Quesion Added");
         process.exit(1);
     } catch (e) {
         console.log(e);
