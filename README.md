@@ -17,7 +17,7 @@ cp .example.env .env
 > > fill in .env with relevant keys
 
 
-> you will need to use the [hyperspace-faucet](https://hyperspace.yoga/#faucet) to recieve tFIL
+> use the [hyperspace-faucet](https://hyperspace.yoga/#faucet) to recieve tFIL
 
 > the [hyperspace-explorer](https://hyperspace.filfox.info/) is where you can watch transactions over the network
 
@@ -52,4 +52,4 @@ cp .example.env .env
 
 # libraries
 
-For explanation on the zk libraries used here, please refer to the [semaphore landing page](https://semaphore.appliedzkp.org/) 
+> explanation on the [semaphore](https://semaphore.appliedzkp.org/) zero knowledge proof libraries used here

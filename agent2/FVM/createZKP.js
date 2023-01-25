@@ -1,26 +1,26 @@
 import { generateProof, packToSolidityProof } from "@semaphore-protocol/proof";
 import { formatBytes32String } from "@ethersproject/strings";
-import * as fs_ from 'fs/promises';
+import * as fs from 'fs/promises';
 import * as dotenv from "dotenv";
+import {createIdentity} from './createIdentity.js';
+import {createGroup} from './createGroup.js';
 dotenv.config({ path: '../../.env' });
 
+const vote = process.argv[2];
+
 async function produceZKProof () {
-    const CID = "blah" //await fs_.readFile('../agent1/ipfs/cid.txt');
-    const VerifierAddress = await fs_.readFile('../blockchain/build/filecoin/verifier::hyperspace.address');
+    const identity = await createIdentity();
+    const group = await createGroup();
 
-    // TODO
-    const identity = "";
-    const group = "";
-
-    const signal = formatBytes32String(CID);
+    const signal = formatBytes32String(vote);
     const externalNullifier = 1;
     const fullProof = await generateProof(identity, group, externalNullifier, signal, {
-        zkeyFilePath: "../../static/semaphore.zkey",
-        wasmFilePath: "../../static/semaphore.wasm"
+        zkeyFilePath: "../tse/semaphore.zkey",
+        wasmFilePath: "../tse/semaphore.wasm"
     });
     const solidityProof = packToSolidityProof(fullProof.proof);
-    const { nullifierHash } = fullProof.publicSignals;
-    const verifierAddress = VerifierAddress.toString();
+    console.log(solidityProof);
+    process.exit();
 }
 
 async function save (path, type) {

@@ -1,11 +1,12 @@
 import { Identity } from "@semaphore-protocol/identity"
 import * as fs from 'fs/promises';
 
-async function createIdentity() {
+export async function createIdentity() {
     const { trapdoor, nullifier, commitment } = new Identity();
     await save('./private/trapdoor.priv', trapdoor);
     await save('./private/nullifier.priv', nullifier);
     await save('./public/commitment.pub', commitment);
+    return { trapdoor, nullifier, commitment };
 }
 
 async function save (path, type) {
@@ -13,6 +14,4 @@ async function save (path, type) {
         if (err) throw err;
     });
     return true;
-}
-
-createIdentity();
+};
