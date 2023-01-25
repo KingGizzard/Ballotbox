@@ -10,7 +10,7 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
-async function castVote () {
+async function exec () {
     try {
         const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
 
@@ -24,8 +24,13 @@ async function castVote () {
             gasLimit: 10000000
         };
 
-        /*
-        await ballotbox.methods.castVote().send(
+        // TODO
+        const vote = "";
+        const nullifierHash = "";
+        const pollId = "";
+        const proof = "";
+
+        await ballotbox.methods.castVoteBallotbox(vote, nullifierHash, pollId, proof).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);
@@ -34,7 +39,6 @@ async function castVote () {
                 }
             }
         );
-        */
 
         console.log("New Quesion Addedß");
         process.exit(1);
@@ -44,4 +48,4 @@ async function castVote () {
     }
 }
 
-castVote();
+exec();

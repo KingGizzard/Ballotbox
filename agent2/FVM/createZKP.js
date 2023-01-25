@@ -4,10 +4,9 @@ import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 dotenv.config({ path: '../../.env' });
 
-
 async function produceZKProof () {
     const CID = "blah" //await fs_.readFile('../agent1/ipfs/cid.txt');
-    const VerifierAddress = "blah" //await fs_.readFile('../blockchain/build/filecoin/verifier::hyperspace.address');
+    const VerifierAddress = await fs_.readFile('../blockchain/build/filecoin/verifier::hyperspace.address');
 
     const signal = formatBytes32String(CID);
     const externalNullifier = 1;
