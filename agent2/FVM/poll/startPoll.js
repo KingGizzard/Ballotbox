@@ -11,6 +11,7 @@ web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
 const pollID = process.argv[2];
+const key = process.argv[3];
 
 async function exec () {
     try {
@@ -27,7 +28,7 @@ async function exec () {
         };
 
         const pollId = pollID.toString();
-        const encryptionKey = "0";
+        const encryptionKey = key.toString();
 
         await ballotbox.methods.startPollBallotbox(pollId, encryptionKey).send(
             transaction , function(err, hash){

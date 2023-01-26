@@ -11,7 +11,7 @@ async function createDummies() {
 }
 
 async function save (path, index, type) {
-    await fs.writeFile('./dummies_' + index + '_' + path, type.toString(), (err) => {
+    await fs.writeFile('./utils/dummies/dummies_' + index + '_' + path, type.toString(), (err) => {
         if (err) throw err;
     });
     return true;

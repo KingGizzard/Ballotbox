@@ -11,8 +11,8 @@ let privateKey = process.env.skAgent2?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
-const Vote = process.argv[2];
-const pollID = process.argv[3];
+const pollID = process.argv[2];
+const Vote = process.argv[3];
 
 async function exec () {
     try {

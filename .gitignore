@@ -5,3 +5,7 @@ package-lock.json
 /blockchain/node_modules/
 /blockchain/build/contracts/
 /blockchain/voteZK/circom/
+
+/agent2/private/*
+
+/utils/dummies/dummies*

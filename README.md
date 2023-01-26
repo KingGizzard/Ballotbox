@@ -25,12 +25,16 @@ npm install -g @lighthouse-web3/sdk
 cp .example.env .env
 ```
 
+> fill in `.env` with relevant keys
+
 ```
-lighthouse-web3 import-wallet --key <private_key>
+lighthouse-web3 import-wallet --key <skAgent2>
 lighthouse-web3 api-key --new 
 ```
 
-> fill in `.env` with relevant keys
+```
+node utils/dummies/genDummyCommittments.js
+```
 
 -----
 -----
@@ -73,6 +77,8 @@ lighthouse-web3 api-key --new
 ## libraries
 
 > explanations on [semaphore's](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
+
+> explanation of [lighthouse-sdk](https://docs.lighthouse.storage/lighthouse-1/) for file storage
 
 -----
 
