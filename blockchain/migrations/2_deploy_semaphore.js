@@ -1,8 +1,8 @@
 const Verifier = artifacts.require("Verifier20");
 const Ballotbox = artifacts.require("Ballotbox");
-const PoseidonT3 = artifacts.require("PoseidonT3");
 const IncrementalBinaryTree = artifacts.require("IncrementalBinaryTree");
 const SemaphoreVoting = artifacts.require("SemaphoreVoting");
+const PoseidonT3 = artifacts.require("PoseidonT3");
 
 const {promises:fs} = require('fs');
 

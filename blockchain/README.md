@@ -10,6 +10,11 @@ npm i
 > deploy initial contracts
 
 ```
+truffle compile
+node createPoseidonContract.js
+```
+
+```
 truffle migrate --network hyperspace
 ```
 
