@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@lighthouse-web3/sdk": "^0.1.12",
     "@semaphore-protocol/group": "^2.6.1",
     "@semaphore-protocol/identity": "^2.6.1",
     "@semaphore-protocol/proof": "^2.6.1",

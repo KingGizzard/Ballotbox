@@ -37,9 +37,6 @@ async function execute () {
             }
         );
             
-        let bal = await web3.eth.getBalance(ballotboxAddress);
-        console.log("Balance in ", ballotboxAddress, " : ", bal);
-    
         process.exit(1);
         } catch (e) {
         console.log(e);

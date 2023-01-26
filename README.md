@@ -4,30 +4,39 @@
 
 -----
 -----
+-----
 
-## set up dependencies and environment
+## set up
+
+### dependencies
 
 > [install node](https://nodejs.org/en/download/package-manager/)
 
-> `in terminal` : 
-
 ```
 npm i
+npm install -g @lighthouse-web3/sdk
 ```
+
+-----
+
+### environment
 
 ```
 cp .example.env .env
 ```
 
-> > fill in .env with relevant keys
+```
+lighthouse-web3 import-wallet --key <private_key>
+lighthouse-web3 api-key --new 
+```
 
-> > > [hyperspace-faucet](https://hyperspace.yoga/#faucet) 
-
-> > > [hyperspace-explorer](https://hyperspace.filfox.info/)
+> fill in `.env` with relevant keys
 
 -----
 -----
 -----
+
+## protocol
 
 ### [blockchain](./blockchain/)
 
@@ -39,9 +48,13 @@ cp .example.env .env
 
 > this agent asks questions (fully public)
 
+-----
+
 ### [agent 2](./agent2/)
 
 > this agent answers questions (anonymous answer, private data)
+
+-----
 
 ### [agent 3](./agent3/)
 
@@ -60,3 +73,11 @@ cp .example.env .env
 ## libraries
 
 > explanations on [semaphore's](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
+
+-----
+
+## resources
+
+> [hyperspace-faucet](https://hyperspace.yoga/#faucet) 
+
+> [hyperspace-explorer](https://hyperspace.filfox.info/)

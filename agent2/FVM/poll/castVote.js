@@ -28,7 +28,7 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        const vote = Vote.toString();
+        const vote = parseInt(Vote);
         const nullifierHash = await fs_.readFile('../../private/nullifier.priv', "utf-8");
         const pollId = pollID.toString();
         const proof = await produceZKProof(vote);

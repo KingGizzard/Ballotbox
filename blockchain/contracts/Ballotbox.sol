@@ -28,11 +28,13 @@ contract Ballotbox {
     string currentCID;
     request currentRequest;
     bool isPoll;
+    uint256 resultTrue;
+    uint256 resultFalse;
 
     event emitNewQuestion(address agent1, string CID);
     event emitNewRequest(address agent3, string CID, string email);
     event emitPollStarted(string CID);
-    event emitPollFinished(string CID);
+    event emitPollFinished(string CID, bool result);
 
     modifier isPollActive(bool pollStatus) {
         require(isPoll == pollStatus, "Please ask your question when the poll is in the correct status");
@@ -92,12 +94,18 @@ contract Ballotbox {
     }
 
     function castVoteBallotbox(
-        bytes32 vote,
+        uint256 vote,
         uint256 nullifierHash,
         uint256 pollId,
         uint256[8] calldata proof
     ) external isPollActive(true) {
-        semaphoreVoting.castVote(vote, nullifierHash, pollId, proof);
+        require(vote == 1 || vote == 0, 'Please vote 1, or 0');
+        if(vote == 1){
+            resultTrue++;
+        } if(vote == 0) {
+            resultFalse++;
+        }
+        semaphoreVoting.castVote(bytes32(vote), nullifierHash, pollId, proof);
     }
 
     function endPollBallotbox(
@@ -106,7 +114,8 @@ contract Ballotbox {
     ) external isPollActive(true) {
         semaphoreVoting.endPoll(pollId, decryptionKey);
         isPoll = false;
-        emit emitPollFinished(currentCID);
+        bool tempResult = resultTrue > resultFalse;
+        emit emitPollFinished(currentCID, tempResult);
     }
 
     ///
