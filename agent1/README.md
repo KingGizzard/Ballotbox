@@ -1,10 +1,10 @@
 > `terminal 0` :
 
 ```
-node ipfs/askQuestion.js
+node ipfs/askQuestion.cjs
 ```
 
-> > `cid` can now be seen at `./ipfs/cid.txt`, search `ipfs://cid` on [brave](https://brave.com/) to see your question live
+> > `cid` can now be seen at `./ipfs/cid.txt`
 
 > `terminal 1` :
 
