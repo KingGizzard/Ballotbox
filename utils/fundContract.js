@@ -26,10 +26,7 @@ async function execute () {
             value: amount,
             gasLimit: 3000000
         };
-    
-        let bal = await web3.eth.getBalance(ballotboxAddress);
-        console.log("Balance in ", ballotboxAddress, " : ", bal);
-    
+
         await ballotbox.methods.deposit().send(
             transaction , function(err, hash){
             if(!err){
@@ -39,6 +36,10 @@ async function execute () {
             }
             }
         );
+            
+        let bal = await web3.eth.getBalance(ballotboxAddress);
+        console.log("Balance in ", ballotboxAddress, " : ", bal);
+    
         process.exit(1);
         } catch (e) {
         console.log(e);

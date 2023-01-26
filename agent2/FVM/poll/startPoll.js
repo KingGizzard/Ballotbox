@@ -27,7 +27,7 @@ async function exec () {
         };
 
         const pollId = pollID.toString();
-        const encryptionKey = ""; // TODO
+        const encryptionKey = "0";
 
         await ballotbox.methods.startPollBallotbox(pollId, encryptionKey).send(
             transaction , function(err, hash){

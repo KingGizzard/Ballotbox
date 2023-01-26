@@ -12,6 +12,4 @@ const contractData = {
     bytecode: poseidonT3Bytecode
 };
 
-console.log(contractData)
-
 artifactor.save(contractData);

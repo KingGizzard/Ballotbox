@@ -11,7 +11,7 @@ npm i
 
 ```
 truffle compile
-node createPoseidonContract.js
+node build/createPoseidonContract.js
 ```
 
 ```
