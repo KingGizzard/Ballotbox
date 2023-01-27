@@ -3,10 +3,11 @@ import * as fs from 'fs/promises';
 
 async function createDummies() {
     for(var i = 0; i < 3; i++){
-        const { trapdoor, nullifier, commitment } = new Identity();
+        const { trapdoor, nullifier, commitment } = new Identity(i.toString());
         await save('trapdoor.priv', i, trapdoor);
         await save('nullifier.priv', i, nullifier);
         await save('committment.pub', i, commitment);
+        console.log({ trapdoor, nullifier, commitment })
     }
 }
 

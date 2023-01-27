@@ -9,17 +9,21 @@ const {promises:fs} = require('fs');
 module.exports = async function (deployer) {
   await deployer.deploy(Verifier);
   const verifier = await Verifier.deployed();
+  await saveAddress('verifier', verifier.address);
 
   await deployer.deploy(PoseidonT3);
-  await PoseidonT3.deployed();
+  const poseidon = await PoseidonT3.deployed();
+  await saveAddress('poseidon', poseidon.address);
 
   deployer.link(PoseidonT3, IncrementalBinaryTree);
   await deployer.deploy(IncrementalBinaryTree);
-  await IncrementalBinaryTree.deployed();
+  const incementalBinaryTree = await IncrementalBinaryTree.deployed();
+  await saveAddress('incementalBinaryTree', incementalBinaryTree.address);
 
   deployer.link(IncrementalBinaryTree, SemaphoreVoting);
   await deployer.deploy(SemaphoreVoting, [[verifier.address, 20]]);
   const semaphoreVoting = await SemaphoreVoting.deployed();
+  await saveAddress('semaphoreVoting', semaphoreVoting.address);
 
   deployer.link(IncrementalBinaryTree, Ballotbox);
   await deployer.deploy(Ballotbox, semaphoreVoting.address)

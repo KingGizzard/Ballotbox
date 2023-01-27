@@ -1,7 +1,7 @@
 > `terminal` :
 
 ```
-node FVM/createIdentity.js
+node FVM/createIdentity.js <phrase>
 ```
 
 > > this will create a public voting identity for the agent
@@ -23,10 +23,10 @@ node FVM/poll/createPoll.js <pollID>
 > > agent 2 creates a poll with an id, to answer whichever question is currently being asked by agent 1
 
 ```
-node FVM/poll/addVoter.js <pollID> <newVoterCommittment>
+node FVM/poll/addVoter.js <pollID> <dummyVoterIndex>
 ```
 
-> > agent 2 adds a voter to the poll
+> > agent 2 adds a voter to the poll (dummyVoterIndex = 1, 2 or 3)
 
 ```
 node FVM/poll/startPoll.js <pollID> <encryption-key>
@@ -35,7 +35,7 @@ node FVM/poll/startPoll.js <pollID> <encryption-key>
 > > agent 2 adds starts the poll with a custom encryption key
 
 ```
-node FVM/poll/castVote.js <pollID> <vote>
+node FVM/poll/castVote.js <pollID> <vote> <dummyVoterIndex> <externalNullifier>
 ```
 
 > > agent 2 votes in the poll

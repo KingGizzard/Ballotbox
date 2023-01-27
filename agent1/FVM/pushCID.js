@@ -2,11 +2,11 @@ import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 import ENV from '../../ENV.json' assert { type: "json" };
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: '../.env' });
 
-let API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
+const API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
 const web3 = new Web3(API);
-let privateKey = process.env.skAgent1?.trim() || "";
+const privateKey = process.env.skAgent1?.trim() || "";
 web3.eth.accounts.wallet.add(privateKey);
 const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address'];
 
@@ -14,7 +14,7 @@ async function execute () {
     try {
         const cid = await fs_.readFile('./ipfs/cid.txt');
         const CID = cid.toString();
-        const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotboxAddress:hyperspace.address", "utf-8");
+        const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotbox:hyperspace.address", "utf-8");
 
         const abi = await fs_.readFile("../blockchain/build/contracts/Ballotbox.json", "utf-8");
         const ABI = JSON.parse(abi);
@@ -26,7 +26,7 @@ async function execute () {
             gasLimit: 10000000
         };
 
-        await ballotbox.methods.newQuestion(CID).send(
+        await ballotbox.methods.newQuestionBallotbox(CID).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);
@@ -36,7 +36,6 @@ async function execute () {
             }
         );
 
-        console.log("New Quesion Addedß");
         process.exit(1);
     } catch (e) {
         console.log(e);

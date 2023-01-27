@@ -22,6 +22,10 @@ npm install -g @lighthouse-web3/sdk
 ### environment
 
 ```
+chmod a+x blockchain/compile.sh
+```
+
+```
 cp .example.env .env
 ```
 
@@ -84,6 +88,6 @@ node utils/dummies/genDummyCommittments.js
 
 ## resources
 
-> [hyperspace-faucet](https://hyperspace.yoga/#faucet) 
+> use [hyperspace-faucet](https://hyperspace.yoga/#faucet) to fund your accounts in `ENV.json`
 
 > [hyperspace-explorer](https://hyperspace.filfox.info/)

@@ -3,6 +3,7 @@ const ENV = require("../ENV.json");
 require('dotenv').config({ path:'../.env'});
 
 const API = ENV["filecoin-hyperspace-testnet"]["rpc-url"];
+const chainId = ENV["filecoin-hyperspace-testnet"]["chain-id"];
 const privateKey = process.env.skAgent2?.trim() || "";
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
     hyperspace: {
       provider: () =>
         new HDWalletProvider(privateKey, API),
-      network_id: ENV["filecoin-hyperspace-testnet"]["chain-id"],
+      network_id: chainId,
       skipDryRun: true, 
     },
   },

@@ -1,4 +1,4 @@
-> `terminal 0` :
+> `terminal` :
 
 ```
 node ipfs/askQuestion.cjs
@@ -6,10 +6,10 @@ node ipfs/askQuestion.cjs
 
 > > `cid` can now be seen at `./ipfs/cid.txt`
 
-> `terminal 1` :
+-----
 
 ```
-node FVM/pushQuestion.js
+node FVM/CID.js
 ```
 
 > > `cid` now posted on the FVM for the DAO to see

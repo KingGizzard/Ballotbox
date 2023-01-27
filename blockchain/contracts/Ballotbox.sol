@@ -27,7 +27,7 @@ contract Ballotbox {
 
     string currentCID;
     request currentRequest;
-    bool isPoll;
+    bool pollIsActive;
     uint256 resultTrue;
     uint256 resultFalse;
 
@@ -36,16 +36,11 @@ contract Ballotbox {
     event emitPollStarted(string CID);
     event emitPollFinished(string CID, bool result);
 
-    modifier isPollActive(bool pollStatus) {
-        require(isPoll == pollStatus, "Please ask your question when the poll is in the correct status");
-        _;
-    }
-
     constructor (address _semaphoreVoting)
     {
         semaphoreVoting = ISemaphoreVoting(_semaphoreVoting);
         currentCID = "";
-        isPoll = false;
+        pollIsActive = false;
     }
 
     ///
@@ -55,9 +50,9 @@ contract Ballotbox {
     function newQuestionBallotbox (
         string memory CID
     ) 
-        public isPollActive(false) returns (bool) 
+        public returns (bool) 
     {
-        isPoll = true;
+        require(pollIsActive == false, "Please ask your question after the next round");
         question storage thisQuestion = questionLedger[CID];
         thisQuestion.agent1 = msg.sender;
         thisQuestion.CID = CID;
@@ -74,21 +69,22 @@ contract Ballotbox {
         uint256 pollId,
         address coordinator,
         uint256 merkleTreeDepth
-    ) external isPollActive(false) {
+    ) public {
         semaphoreVoting.createPoll(pollId, coordinator, merkleTreeDepth);
+        pollIsActive = true;
     }
 
     function addVoterBallotbox(
         uint256 pollId, 
         uint256 identityCommitment
-    ) external isPollActive(true) {
+    ) public {
         semaphoreVoting.addVoter(pollId, identityCommitment);
     }
 
     function startPollBallotbox(
         uint256 pollId, 
         uint256 encryptionKey
-    ) external isPollActive(true) {
+    ) public {
         semaphoreVoting.startPoll(pollId, encryptionKey);
         emit emitPollStarted(currentCID);
     }
@@ -98,7 +94,7 @@ contract Ballotbox {
         uint256 nullifierHash,
         uint256 pollId,
         uint256[8] calldata proof
-    ) external isPollActive(true) {
+    ) public {
         require(vote == 1 || vote == 0, 'Please vote 1, or 0');
         if(vote == 1){
             resultTrue++;
@@ -111,10 +107,10 @@ contract Ballotbox {
     function endPollBallotbox(
         uint256 pollId, 
         uint256 decryptionKey
-    ) external isPollActive(true) {
+    ) public {
         semaphoreVoting.endPoll(pollId, decryptionKey);
-        isPoll = false;
         bool tempResult = resultTrue > resultFalse;
+        pollIsActive = false;
         emit emitPollFinished(currentCID, tempResult);
     }
 

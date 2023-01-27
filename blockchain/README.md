@@ -10,8 +10,7 @@ npm i
 > deploy initial contracts
 
 ```
-truffle compile
-node build/createPoseidonContract.js
+./compile.sh
 ```
 
 ```

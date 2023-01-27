@@ -1,10 +1,10 @@
 import { Identity } from "@semaphore-protocol/identity"
 import * as fs from 'fs/promises';
 
-const agentName = process.argv[2];
+const identityPhrase = process.argv[2];
 
 export async function createIdentity() {
-    const { trapdoor, nullifier, commitment } = new Identity();
+    const { trapdoor, nullifier, commitment } = new Identity(identityPhrase.toString());
     await save('./private/trapdoor.priv', trapdoor);
     await save('./private/nullifier.priv', nullifier);
     await save('./public/commitment.pub', commitment);

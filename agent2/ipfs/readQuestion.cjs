@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
-var request = require('request')
+const request = require('request')
 const ENV = require('../../ENV.json');
-var url = ENV.lighthouseUrl
+const url = ENV.lighthouseUrl
 
 async function main() {
   const cid = await fs.readFile('../agent1/ipfs/cid.txt');

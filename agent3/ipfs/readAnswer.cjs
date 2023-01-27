@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
-var request = require('request')
+const request = require('request')
 const ENV = require('../../ENV.json');
-var url = ENV.lighthouseUrl
+const url = ENV.lighthouseUrl
 
 const cid = process.argv[2];
 

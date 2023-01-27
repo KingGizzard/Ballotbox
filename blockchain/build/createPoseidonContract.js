@@ -13,3 +13,5 @@ const contractData = {
 };
 
 artifactor.save(contractData);
+
+console.log('> Poseidon compiled')
