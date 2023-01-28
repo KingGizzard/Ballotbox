@@ -36,10 +36,6 @@ lighthouse-web3 import-wallet --key <skAgent2>
 lighthouse-web3 api-key --new 
 ```
 
-```
-node utils/dummies/genDummyCommittments.js
-```
-
 -----
 -----
 -----
@@ -78,16 +74,16 @@ node utils/dummies/genDummyCommittments.js
 -----
 -----
 
-## libraries
-
-> explanations on [semaphore's](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
-
-> explanation of [lighthouse-sdk](https://docs.lighthouse.storage/lighthouse-1/) for file storage
-
------
-
 ## resources
 
 > use [hyperspace-faucet](https://hyperspace.yoga/#faucet) to fund your accounts in `ENV.json`
 
 > [hyperspace-explorer](https://hyperspace.filfox.info/)
+
+-----
+
+## libraries
+
+> explanations on [semaphore's](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
+
+> explanation of [lighthouse-sdk](https://docs.lighthouse.storage/lighthouse-1/) for file storage

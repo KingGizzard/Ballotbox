@@ -1,18 +1,49 @@
-const ethers = require("ethers");
-const ABI = require("./abi.json"); // need to generate
-require("dotenv").config();
+import Web3 from 'web3';
+import * as fs_ from 'fs/promises';
+import * as dotenv from "dotenv";
+import ENV from '../ENV.json' assert { type: "json" };
+dotenv.config({ path: '../.env' });
+const web3 = new Web3(ENV['filecoin-hyperspace-testnet'].wss);
 
+async function getEvent() {
+  const ballotboxAddress = await fs_.readFile("../blockchain/build/filecoin/ballotbox:hyperspace.address", "utf-8");
 
-// reuse for other events
-async function getEvent1() {
-  const contractAddress = "0x..."; // contract address
-  const provider = new ethers.provider.WebSocketProvider(
-    // provider here
-  )
+  const abi = await fs_.readFile("../blockchain/build/contracts/Ballotbox.json", "utf-8");
+  const ABI = JSON.parse(abi);
+  const ballotbox = new web3.eth.Contract(ABI.abi, ballotboxAddress, null);
 
-  const contract = new ethers.Contract(contractAddress, ABI, provider);
+  ballotbox.events
+  .emitNewQuestion()
+  .on('connected', () => {
+      console.log('connected');
+  })
+  .on('data', async event => {
+      try {
+        console.log(event);
+      } catch (e) {
+          console.error(e);
+      }
+  })
+  .on('changed', function (event) {})
+  .on('error', function (error, receipt) {
+      console.log('locked error: ' + error);
+  });
 
-  contract.on("event", (contractEvent) => {
-    console.log(contractEvent);
+  ballotbox.events
+  .emitNewRequest()
+  .on('connected', () => {
+      console.log('connected');
+  })
+  .on('data', async event => {
+      try {
+        console.log(event);
+      } catch (e) {
+          console.error(e);
+      }
+  })
+  .on('changed', function (event) {})
+  .on('error', function (error, receipt) {
+      console.log('locked error: ' + error);
   });
 }
+getEvent()

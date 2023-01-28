@@ -24,7 +24,7 @@ async function execute () {
             from: senderAddress,
             to: ballotboxAddress,
             value: amount,
-            gas: 35000
+            gasLimit: 10000000
         };
 
         await ballotbox.methods.deposit().send(

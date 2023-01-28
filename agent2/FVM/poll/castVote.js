@@ -1,9 +1,8 @@
 import Web3 from 'web3';
 import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
-import { Identity } from "@semaphore-protocol/identity"
 import ENV from '../../../ENV.json' assert { type: "json" };
-import {produceZKProof} from '../createZKP';
+import {produceZKProof} from '../createZKP.js';
 dotenv.config({ path: '../.env' });
 
 const API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
@@ -14,8 +13,6 @@ const senderAddress = web3.eth.accounts.privateKeyToAccount(privateKey)['address
 
 const pollID = process.argv[2];
 const Vote = process.argv[3];
-const dummyVoterIndex = process.argv[4];
-const externalNullifier = process.argv[5];
 
 async function exec () {
     try {
@@ -32,11 +29,11 @@ async function exec () {
         };
 
         const vote = parseInt(Vote);
-        const {nullifier} = new Identity(dummyVoterIndex);
         const pollId = parseInt(pollID);
-        const proof = await produceZKProof(vote, dummyVoterIndex, parseInt(externalNullifier));
+        const proof = await produceZKProof();
+        const nullifierHash = proof.fullProof.publicSignals.nullifierHash;
 
-        await ballotbox.methods.castVoteBallotbox(vote, nullifier, pollId, proof).send(
+        await ballotbox.methods.castVoteBallotbox(vote, nullifierHash, pollId, proof.solidityProof).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);

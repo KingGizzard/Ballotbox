@@ -1,7 +1,6 @@
 const Verifier = artifacts.require("Verifier20");
 const Ballotbox = artifacts.require("Ballotbox");
 const IncrementalBinaryTree = artifacts.require("IncrementalBinaryTree");
-const SemaphoreVoting = artifacts.require("SemaphoreVoting");
 const PoseidonT3 = artifacts.require("PoseidonT3");
 
 const {promises:fs} = require('fs');
@@ -20,13 +19,8 @@ module.exports = async function (deployer) {
   const incementalBinaryTree = await IncrementalBinaryTree.deployed();
   await saveAddress('incementalBinaryTree', incementalBinaryTree.address);
 
-  deployer.link(IncrementalBinaryTree, SemaphoreVoting);
-  await deployer.deploy(SemaphoreVoting, [[verifier.address, 20]]);
-  const semaphoreVoting = await SemaphoreVoting.deployed();
-  await saveAddress('semaphoreVoting', semaphoreVoting.address);
-
   deployer.link(IncrementalBinaryTree, Ballotbox);
-  await deployer.deploy(Ballotbox, semaphoreVoting.address)
+  await deployer.deploy(Ballotbox, [[verifier.address, 20]])
   const ballotbox = await Ballotbox.deployed();
   await saveAddress('ballotbox', ballotbox.address);
 };

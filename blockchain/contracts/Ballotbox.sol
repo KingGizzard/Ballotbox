@@ -2,6 +2,7 @@
 pragma solidity ^0.8.4;
 
 import "@semaphore-protocol/contracts/interfaces/ISemaphoreVoting.sol";
+import "@semaphore-protocol/contracts/extensions/SemaphoreVoting.sol";
 
 contract Ballotbox {
 
@@ -36,9 +37,9 @@ contract Ballotbox {
     event emitPollStarted(string CID);
     event emitPollFinished(string CID, bool result);
 
-    constructor (address _semaphoreVoting)
+    constructor (ISemaphoreVoting.Verifier[] memory _verifiers)
     {
-        semaphoreVoting = ISemaphoreVoting(_semaphoreVoting);
+        semaphoreVoting = new SemaphoreVoting(_verifiers);
         currentCID = "";
         pollIsActive = false;
     }
@@ -67,10 +68,9 @@ contract Ballotbox {
 
     function createPollBallotbox(
         uint256 pollId,
-        address coordinator,
         uint256 merkleTreeDepth
     ) public {
-        semaphoreVoting.createPoll(pollId, coordinator, merkleTreeDepth);
+        semaphoreVoting.createPoll(pollId, address(this), merkleTreeDepth);
         pollIsActive = true;
     }
 
@@ -95,12 +95,6 @@ contract Ballotbox {
         uint256 pollId,
         uint256[8] calldata proof
     ) public {
-        require(vote == 1 || vote == 0, 'Please vote 1, or 0');
-        if(vote == 1){
-            resultTrue++;
-        } if(vote == 0) {
-            resultFalse++;
-        }
         semaphoreVoting.castVote(bytes32(vote), nullifierHash, pollId, proof);
     }
 

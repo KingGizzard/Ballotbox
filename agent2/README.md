@@ -35,13 +35,17 @@ node FVM/poll/startPoll.js <pollID> <encryption-key>
 > > agent 2 adds starts the poll with a custom encryption key
 
 ```
-node FVM/poll/castVote.js <pollID> <vote> <dummyVoterIndex> <externalNullifier>
+node FVM/poll/castVote.js <pollID> <vote = 0 or 1> <dummyVoterIndex> <externalNullifier>
 ```
 
-> > agent 2 votes in the poll
+> > dummy voter votes in the poll using agent 2 as a proxy
 
 ```
 node FVM/poll/endPoll.js <pollID> <decryption-key>
 ```
 
 > > agent 2 adds starts the poll with a custom decryption key
+
+-----
+
+> > > as you can tell: agent 2 here is quite at risk of being infamous for enabling anons to be anon!

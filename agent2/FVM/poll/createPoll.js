@@ -27,10 +27,9 @@ async function exec () {
         };
 
         const pollId = parseInt(pollID);
-        const coordinator = ENV['entity-addresses'].agent2;
         const merkleTreeDepth = 20;
 
-        await ballotbox.methods.createPollBallotbox(pollId, coordinator, merkleTreeDepth).send(
+        await ballotbox.methods.createPollBallotbox(pollId, merkleTreeDepth).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);

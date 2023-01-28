@@ -30,9 +30,9 @@ async function exec () {
         };
 
         const pollId = parseInt(pollID);
-        const {commitment} = new Identity(dummyVoterIndex); 
+        const identity = new Identity(dummyVoterIndex.toString());
 
-        await ballotbox.methods.addVoterBallotbox(pollId, commitment).send(
+        await ballotbox.methods.addVoterBallotbox(pollId, identity.commitment).send(
             transaction , function(err, hash){
                 if(!err){
                     console.log("Transaction hash :", hash);
