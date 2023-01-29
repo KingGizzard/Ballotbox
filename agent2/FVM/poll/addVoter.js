@@ -3,7 +3,6 @@ import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 import ENV from '../../../ENV.json' assert { type: "json" };
 import { Identity } from "@semaphore-protocol/identity"
-
 dotenv.config({ path: '../.env' });
 
 const API = ENV['filecoin-hyperspace-testnet']['rpc-url'];

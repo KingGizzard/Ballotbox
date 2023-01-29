@@ -90,12 +90,12 @@ contract Ballotbox {
     }
 
     function castVoteBallotbox(
-        uint256 vote,
+        bytes32 vote,
         uint256 nullifierHash,
         uint256 pollId,
         uint256[8] calldata proof
     ) public {
-        semaphoreVoting.castVote(bytes32(vote), nullifierHash, pollId, proof);
+        semaphoreVoting.castVote(vote, nullifierHash, pollId, proof);
     }
 
     function endPollBallotbox(

@@ -27,7 +27,7 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        const pollId = parseInt(pollID);
+        const pollId = BigInt(pollID);
         const decryptionKey = BigInt(key);
 
         await ballotbox.methods.endPollBallotbox(pollId, decryptionKey).send(
