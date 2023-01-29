@@ -26,7 +26,7 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        const pollId = parseInt(pollID);
+        const pollId = BigInt(pollID);
         const merkleTreeDepth = 20;
 
         await ballotbox.methods.createPollBallotbox(pollId, merkleTreeDepth).send(

@@ -3,6 +3,7 @@ import * as fs_ from 'fs/promises';
 import * as dotenv from "dotenv";
 import ENV from '../../../ENV.json' assert { type: "json" };
 import {produceZKProof} from '../createZKP.js';
+import { formatBytes32String } from "@ethersproject/strings"
 dotenv.config({ path: '../.env' });
 
 const API = ENV['filecoin-hyperspace-testnet']['rpc-url'];
@@ -28,8 +29,8 @@ async function exec () {
             gasLimit: 10000000
         };
 
-        const vote = parseInt(Vote);
-        const pollId = parseInt(pollID);
+        const vote = formatBytes32String(Vote);
+        const pollId = BigInt(pollID);
         const proof = await produceZKProof();
         const nullifierHash = proof.fullProof.publicSignals.nullifierHash;
 
