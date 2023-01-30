@@ -1,4 +1,5 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import Agent1 from '@/components/Event1';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
           <p className='font-3xl'>
             stuff goes here
           </p>
+          <Agent1 />
         </div> 
       </main>
     </>
