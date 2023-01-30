@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Agent1 from '@/components/Event1';
+import Header from '@/components/Header';
+import React, { useEffect, useState } from 'react';
 
 export default function Home() {
   return (
@@ -12,9 +14,7 @@ export default function Home() {
       </Head>
       <main className='text-center'>
         <div>
-          <p className='font-3xl'>
-            stuff goes here
-          </p>
+          <Header />
           <Agent1 />
         </div> 
       </main>
