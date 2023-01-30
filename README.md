@@ -2,6 +2,8 @@
 
 > built during the [2023 FVM hackathon](https://spacewarp.fvm.dev/)
 
+Exploiting ZKP technology and IPFS to make the future of data _by the user, for the user_.
+
 -----
 -----
 -----
