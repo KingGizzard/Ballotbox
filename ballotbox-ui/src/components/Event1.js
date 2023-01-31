@@ -40,10 +40,6 @@ const Agent1 = () => {
     console.log('Visit at https://gateway.lighthouse.storage/ipfs/' + output.data.Hash);
   }
 
-  useEffect(() => {
-    console.log('input text:', inputText);
-  }, [inputText]);
-
   return (
     <div className='text-center w-[510px] mx-auto flex flex-col gap-3'>
       <h1 className='text-2xl'>Agent 1</h1>
