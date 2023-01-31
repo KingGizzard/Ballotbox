@@ -8,8 +8,8 @@ const Agent1 = () => {
   const [file, setFile] = useState(null);
   const [fileData, setFileData] = useState(null);
   const [fileSrc, setFileSrc] = useState(null);
-
-  
+  const [ipfsHash, setIpfsHash] = useState(null);
+  const [inputText, setInputText] = useState(null);
 
   const handleChange = (file) => {
     const reader = new FileReader();
@@ -35,20 +35,59 @@ const Agent1 = () => {
 
   const deploy = async (e) => {
     const output = await lighthouse.uploadText(e, process.env.lighthouse_key, progressCallback);
+    setIpfsHash(output.data.Hash);
     console.log('File status:', output);
     console.log('Visit at https://gateway.lighthouse.storage/ipfs/' + output.data.Hash);
   }
 
+  useEffect(() => {
+    console.log('input text:', inputText);
+  }, [inputText]);
+
   return (
-    <div className='flex flex-col justify-center text-center'>
-      <FileUploader 
-        multiple={false}
-        handleChange={handleChange}
-        name="file"
-        types={fileTypes}
-      />
-      <p>{file ? `File name: ${file.name}` : "no files uploaded yet"}</p>
-      {fileData && <img className='max-w-[30vw] max-h-[30vh]' src={fileSrc} />}
+    <div className='text-center w-[510px] mx-auto flex flex-col gap-3'>
+      <h1 className='text-2xl'>Agent 1</h1>
+      <div>
+        <FileUploader 
+          multiple={false}
+          handleChange={handleChange}
+          name="file"
+          types={fileTypes}
+          disabled={!!ipfsHash}
+        />
+      </div>
+      <p>or enter text manually</p>
+      <div className='self-center flex gap-3' disabled={!!ipfsHash}>
+        <input
+          disabled={!!ipfsHash}
+          className='px-1'
+          onChange={(e) => setInputText(e.target.value)}
+        />
+        <div
+          className={!!ipfsHash ? 'select-none bg-gray-600 rounded-full px-2 hover:cursor-not-allowed' : 'select-none bg-gray-600 rounded-full px-2 hover:cursor-pointer hover:bg-gray-500 duration-150 ease-in-out'}
+          onClick={() => deploy(inputText)}
+        >
+          Enter
+        </div>
+      </div>
+      {ipfsHash && <p>
+        {'uploaded successfully, view on: '}
+        <a 
+          href={`https://gateway.lighthouse.storage/ipfs/${ipfsHash}`}
+          target="_blank"
+          rel='noopener noreferrer'
+          className='text-blue-500 hover:text-blue-400'
+        >
+          {ipfsHash}
+        </a>
+        <br/>
+        <div
+          className='select-none bg-gray-600 rounded-full px-2 hover:cursor-pointer hover:bg-gray-500 duration-150 ease-in-out w-1/2 mx-auto my-1'
+          onClick={() => setIpfsHash(null)}
+        >
+          click here to upload another
+        </div>
+      </p>}
     </div>
   )
 }
