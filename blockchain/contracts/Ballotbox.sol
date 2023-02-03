@@ -29,6 +29,7 @@ contract Ballotbox {
     string currentCID;
     request currentRequest;
     bool pollIsActive;
+    bool result;
     uint256 resultTrue;
     uint256 resultFalse;
 
@@ -85,6 +86,8 @@ contract Ballotbox {
         uint256 pollId, 
         uint256 encryptionKey
     ) public {
+        resultTrue = 0;
+        resultFalse = 0;
         semaphoreVoting.startPoll(pollId, encryptionKey);
         emit emitPollStarted(currentCID);
     }
@@ -95,6 +98,13 @@ contract Ballotbox {
         uint256 pollId,
         uint256[8] calldata proof
     ) public {
+        if (vote == "1") {
+            resultTrue++;
+        } else if (vote == "0") {
+            resultFalse++;
+        } else {
+            return;
+        }
         semaphoreVoting.castVote(vote, nullifierHash, pollId, proof);
     }
 
@@ -103,9 +113,9 @@ contract Ballotbox {
         uint256 decryptionKey
     ) public {
         semaphoreVoting.endPoll(pollId, decryptionKey);
-        bool tempResult = resultTrue > resultFalse;
+        result = resultTrue > resultFalse;
         pollIsActive = false;
-        emit emitPollFinished(currentCID, tempResult);
+        emit emitPollFinished(currentCID, result);
     }
 
     ///
@@ -140,6 +150,12 @@ contract Ballotbox {
         public view returns (request memory)
     {
         return currentRequest;
+    }
+
+    function getResult() 
+        public view returns (bool) 
+    {
+        return result;
     }
 
     function deposit() public payable {}
