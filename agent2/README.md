@@ -1,12 +1,6 @@
 > `terminal` :
 
 ```
-node FVM/createIdentity.js <phrase>
-```
-
-> > this will create a public voting identity for the agent
-
-```
 node ipfs/readQuestion.cjs
 ```
 
@@ -15,12 +9,6 @@ node ipfs/readQuestion.cjs
 -----
 
 > `terminal` :
-
-```
-node FVM/poll/createPoll.js <pollID>
-```
-
-> > agent 2 creates a poll with an id, to answer whichever question is currently being asked by agent 1
 
 ```
 node FVM/poll/addVoter.js <pollID> <dummyVoterIndex>
@@ -32,19 +20,19 @@ node FVM/poll/addVoter.js <pollID> <dummyVoterIndex>
 node FVM/poll/startPoll.js <pollID> <encryption-key>
 ```
 
-> > agent 2 adds starts the poll with a custom encryption key
+> > agent 2 starts the poll with a custom encryption key. 
 
 ```
 node FVM/poll/castVote.js <pollID> <vote = 0 or 1> <dummyVoterIndex> <externalNullifier>
 ```
 
-> > dummy voter votes in the poll using agent 2 as a proxy
+> > dummy voter votes in the poll using agent 2 as a proxy. 
 
 ```
 node FVM/poll/endPoll.js <pollID> <decryption-key>
 ```
 
-> > agent 2 adds starts the poll with a custom decryption key
+> > agent 2 ends the poll with a custom decryption key. At this point, agent 3 should be used.
 
 -----
 
