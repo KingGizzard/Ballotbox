@@ -3,3 +3,5 @@
 ```
 node fundContract.js <amount>
 ```
+
+> then move on to agent 1.

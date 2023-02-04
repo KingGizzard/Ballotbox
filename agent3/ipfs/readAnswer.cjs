@@ -1,4 +1,3 @@
-const fs = require('fs/promises');
 const request = require('request')
 const ENV = require('../../ENV.json');
 const url = ENV.lighthouseUrl

@@ -14,7 +14,7 @@ node ipfs/readQuestion.cjs
 node FVM/poll/addVoter.js <pollID> <dummyVoterIndex>
 ```
 
-> > agent 2 adds a voter to the poll (dummyVoterIndex = 1, 2 or 3)
+> > agent 2 adds a voter to the poll (dummyVoterIndex = 0, 1, ... etc)
 
 ```
 node FVM/poll/startPoll.js <pollID> <encryption-key>
@@ -23,10 +23,10 @@ node FVM/poll/startPoll.js <pollID> <encryption-key>
 > > agent 2 starts the poll with a custom encryption key. 
 
 ```
-node FVM/poll/castVote.js <pollID> <vote = 0 or 1> <dummyVoterIndex> <externalNullifier>
+node FVM/poll/castVote.js <pollID> <vote = 0 or 1> <dummyVoterArray = "[0, 1, ... etc]"> <dummyVoterIndex>
 ```
 
-> > dummy voter votes in the poll using agent 2 as a proxy. 
+> > dummy voter votes in the poll using agent 2 as a proxy (dummyVoterArray should include all the dummyVoters added to the poll)
 
 ```
 node FVM/poll/endPoll.js <pollID> <decryption-key>

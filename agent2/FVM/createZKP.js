@@ -7,12 +7,17 @@ dotenv.config({ path: '../../.env' });
 
 const pollID = process.argv[2];
 const Vote = process.argv[3];
-const dummyVoterIndex = process.argv[4];
+const dummyIdentityArray = process.argv[4];
+const thisAgentIdentity = process.argv[5];
 
 export async function produceZKProof () {
-    const identity = new Identity(dummyVoterIndex.toString());
+    var identities = [];
+    for (var i in JSON.parse(dummyIdentityArray)) {
+        identities.push((new Identity(i)).commitment);
+    }
+    const identity = new Identity(thisAgentIdentity.toString());
     const group = new Group(20);
-    group.addMembers([identity.commitment]);
+    group.addMembers(identities);
 
     const signal = formatBytes32String(Vote);
     const externalNullifier = BigInt(pollID);

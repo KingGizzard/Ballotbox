@@ -9,7 +9,7 @@ node ipfs/askQuestion.cjs
 -----
 
 ```
-node FVM/CID.js
+node FVM/pushCID.js
 ```
 
 > > `cid` now posted on the FVM for the DAO to see

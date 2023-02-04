@@ -44,6 +44,8 @@ lighthouse-web3 api-key --new
 
 ## protocol
 
+> use these directories in order
+
 ### [blockchain](./blockchain/)
 
 > push smart contracts live to filecoin hyperspace-test-network, using [truffle](https://trufflesuite.com/)
