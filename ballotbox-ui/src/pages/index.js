@@ -76,11 +76,6 @@ export default function Home() {
           { showAgent3 && <Agent3 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} txHashes={txHashes} setTxHashes={setTxHashes} /> }
         </div> 
         <div>
-        {txHashes.map((hash) => {
-          <div key={hash}>
-            <TxWidget txHash={hash} />
-          </div>
-        })}
       </div>
       </main>
     </>
