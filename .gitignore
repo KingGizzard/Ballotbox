@@ -1,6 +1,7 @@
 /node_modules/
 package-lock.json
 .env
+ENV-copy.json
 
 /blockchain/node_modules/
 /blockchain/build/contracts/
@@ -9,3 +10,5 @@ package-lock.json
 /agent2/private/*
 
 /utils/dummies/dummies*
+
+/ballotbox-ui/node_modules
