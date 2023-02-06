@@ -28,7 +28,7 @@ contract Ballotbox {
 
     string currentCID;
     request currentRequest;
-    bool pollIsActive;
+    // bool pollIsActive;
     bool result;
     uint256 resultTrue;
     uint256 resultFalse;
@@ -42,7 +42,7 @@ contract Ballotbox {
     {
         semaphoreVoting = new SemaphoreVoting(_verifiers);
         currentCID = "";
-        pollIsActive = false;
+        // pollIsActive = false;
     }
 
     ///
@@ -54,7 +54,7 @@ contract Ballotbox {
     ) 
         public returns (bool) 
     {
-        require(pollIsActive == false, "Please ask your question after the next round");
+        // require(pollIsActive == false, "Please ask your question after the next round");
         question storage thisQuestion = questionLedger[CID];
         thisQuestion.agent1 = msg.sender;
         thisQuestion.CID = CID;
@@ -72,7 +72,7 @@ contract Ballotbox {
         uint256 merkleTreeDepth
     ) public {
         semaphoreVoting.createPoll(pollId, address(this), merkleTreeDepth);
-        pollIsActive = true;
+        // pollIsActive = true;
     }
 
     function addVoterBallotbox(
@@ -114,7 +114,7 @@ contract Ballotbox {
     ) public {
         semaphoreVoting.endPoll(pollId, decryptionKey);
         result = resultTrue > resultFalse;
-        pollIsActive = false;
+        // pollIsActive = false;
         emit emitPollFinished(currentCID, result);
     }
 
