@@ -31,7 +31,7 @@ const Agent2 = (props) => {
   const transaction = {
     from: address,
     to: ballotboxAddress,
-    // gasLimit: 10000000
+    gasLimit: 10000000
   }
 
   const checkTx = async (hash) => {
@@ -49,7 +49,7 @@ const Agent2 = (props) => {
       if (addVoterHash && !addVoterConfirmed) {
         checkTx(addVoterHash).then((status) => {
           if (status) {
-            setAddVoterHash(null);
+            setAddVoterConfirmed(true);
           }
         })
       }
@@ -120,7 +120,7 @@ const Agent2 = (props) => {
     for (var i in dummyIdentityArray) {
         identities.push((new Identity(i)).commitment);
     }
-    const identity = new Identity(String(dummyVoter));
+    const identity = new Identity(String(thisAgentIdentity));
     const group = new Group(20);
     group.addMembers(identities);
 
@@ -144,6 +144,7 @@ const Agent2 = (props) => {
         }
       }
     )
+
     return;
   }
 
@@ -169,31 +170,31 @@ const Agent2 = (props) => {
           <h1 className="text-xl">Connect wallet to add voters, start poll, cast a vote, or end a poll</h1>
         :
           <div className="">
-            <div>1. Enter poll ID</div>
+            <div>Enter poll ID</div>
             <input onChange={(e) => setPollId(e.target.value)} />
             <Button text='Confirm' onClick={() => setPollIdConfirmed(true)} />
             { pollIdConfirmed &&
               <div className="my-8 flex flex-col gap-3">
                 <div>
-                  <p>2. Enter dummy voter index to add voter</p>
-                  <input onChange={(e) => setDummyVoterIndex(e.target.value)} /> 
-                  <Button text='add voter' onClick={addVoter} loading={addVoterHash && !addVoterConfirmed} />
-                  <TxLink txHash={addVoterHash} />
-                </div>                
-                <div>
-                  <p>3. Enter encryption key to start poll, you can&apos;t add more voters so be sure to add them before you start.</p>
+                  <p>Enter encryption key to start poll</p>
                   <input onChange={(e) => setEncryptionKey(e.target.value)} />
                   <Button text='start poll' onClick={startPoll} loading={startPollHash && !startPollConfirmed} />
                   <TxLink txHash={startPollHash} />
                 </div>
                 <div>
-                  <p>4. Enter your vote</p>
+                  <p>Enter dummy voter index to add voter</p>
+                  <input onChange={(e) => setDummyVoterIndex(e.target.value)} /> 
+                  <Button text='add voter' onClick={addVoter} loading={addVoterHash && !addVoterConfirmed} />
+                  <TxLink txHash={addVoterHash} />
+                </div>
+                <div>
+                  <p>Enter vote</p>
                   <input onChange={(e) => setVote(e.target.value)} />
                   <Button text='cast vote' onClick={castVote} loading={castVoteHash && !castVoteConfirmed} />
                   <TxLink txHash={castVoteHash} />
                 </div>
                 <div>
-                  <p>5. Enter decryption key to end poll</p>
+                  <p>Enter decryption key to end poll</p>
                   <input onChange={(e) => setDecryptionKey(e.target.value)} />
                   <Button text='end poll' onClick={endPoll} loading={endPollHash && !endPollConfirmed} />
                   <TxLink txHash={endPollHash} />
@@ -206,5 +207,3 @@ const Agent2 = (props) => {
     </div>
   )
 }
-
-export default Agent2;

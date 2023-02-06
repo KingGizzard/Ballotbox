@@ -83,6 +83,7 @@ lighthouse-web3 api-key --new
 > use [hyperspace-faucet](https://hyperspace.yoga/#faucet) to fund your accounts in `ENV.json`
 
 > [hyperspace-explorer](https://hyperspace.filfox.info/)
+> [hyperspace-explorer-alternative](https://explorer.glif.io/)
 
 -----
 

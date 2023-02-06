@@ -110,7 +110,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
-      gasLimit: 10000000,
+      // gasLimit: 10000000,
     }
 
     await ballotboxContract.methods.newQuestionBallotbox(ipfsHash).send(
@@ -137,7 +137,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
-      gasLimit: 10000000,
+      // gasLimit: 10000000,
     }
 
     await ballotboxContract.methods.createPollBallotbox(id, merkleTreeDepth).send(
@@ -212,7 +212,7 @@ const Agent1 = (props) => {
         {
           deployConfirmed && createPollConfirmed &&
           <div>
-            <p>{`Poll created with ID ${pollId}`}</p>
+            <p className='text-lg m-2.5 font-semibold'>{`Poll created with ID ${pollId}`}</p>
             <div
               className='w-1/3 mx-auto select-none bg-gray-600 rounded-full px-2 hover:cursor-pointer hover:bg-gray-500 duration-150 ease-in-out'
               onClick={() =>setIpfsHash(null)}
