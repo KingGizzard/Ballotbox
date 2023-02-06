@@ -186,14 +186,14 @@ const Agent2 = (props) => {
                   <Button text='start poll' onClick={startPoll} loading={startPollHash && !startPollConfirmed} />
                   <TxLink txHash={startPollHash} />
                 </div>
-                <div>
+                {/*<div>
                   <p>4. Enter your vote</p>
                   <input onChange={(e) => setVote(e.target.value)} />
                   <Button text='cast vote' onClick={castVote} loading={castVoteHash && !castVoteConfirmed} />
                   <TxLink txHash={castVoteHash} />
-                </div>
+                </div>*/}
                 <div>
-                  <p>5. Enter decryption key to end poll</p>
+                  <p>4. Enter decryption key to end poll</p>
                   <input onChange={(e) => setDecryptionKey(e.target.value)} />
                   <Button text='end poll' onClick={endPoll} loading={endPollHash && !endPollConfirmed} />
                   <TxLink txHash={endPollHash} />
