@@ -16,6 +16,7 @@ export default function Home() {
   const [web3, setWeb3] = useState(null);
   const [address, setAddress] = useState(null);
   const [ballotboxContract, setBallotboxContract] = useState(null);
+  const [txHashes, setTxHashes] = useState([]);
 
   const ballotbox_abi = ballotbox.abi;
   const ballotboxAddress = '0x6eEb802EADB62E0B9616c71D2e958381d2a977D5'; // shouldn't hard code this, make sure to change later :)
@@ -70,10 +71,17 @@ export default function Home() {
             address={address}
             setAddress={setAddress}
           />
-          { showAgent1 && <Agent1 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} /> }
-          { showAgent2 && <Agent2 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} /> }
-          { showAgent3 && <Agent3 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} /> }
+          { showAgent1 && <Agent1 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} txHashes={txHashes} setTxHashes={setTxHashes} /> }
+          { showAgent2 && <Agent2 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} txHashes={txHashes} setTxHashes={setTxHashes} /> }
+          { showAgent3 && <Agent3 provider={provider} address={address} web3={web3} ballotboxContract={ballotboxContract} ballotboxAddress={ballotboxAddress} txHashes={txHashes} setTxHashes={setTxHashes} /> }
         </div> 
+        <div>
+        {txHashes.map((hash) => {
+          <div key={hash}>
+            <TxWidget txHash={hash} />
+          </div>
+        })}
+      </div>
       </main>
     </>
   )

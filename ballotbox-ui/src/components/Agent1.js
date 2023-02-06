@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import lighthouse from '@lighthouse-web3/sdk'
 import Button from './Button';
+import TxLink from './TxLink';
 
 const fileTypes = ['txt']; // for file uploader
 const defaultErrorMsg = ' ';
@@ -14,6 +15,9 @@ modal with ethereum mainnet by default.
 const Agent1 = (props) => {
   const { web3, ballotboxContract, address, ballotboxAddress } = props;
 
+  const [file, setFile] = useState(null);
+  const [fileData, setFileData] = useState(null);
+  
   const [ipfsHash, setIpfsHash] = useState('');
   
   const [deployHash, setDeployHash] = useState(null);
@@ -29,33 +33,13 @@ const Agent1 = (props) => {
   const [txHashes, setTxHashes] = useState([]);
   
   // delete this later, lighthouse was down for a bit
-  useEffect(() => {
+  /*useEffect(() => {
     setIpfsHash('QmfVZviJh1MKFSxCCfngyjoGqrYtCoTYpvqz8FoueCK4v3');
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     console.log('ipfs hash: ', ipfsHash);
   }, [ipfsHash]);
-
-  const TxWidget = (props) => {
-    const { txHash } = props;
-    return (
-      <div>
-        view on
-        <a href={`https://hyperspace.filfox.info/en/tx/${txHash}`}  >
-          FILFOX
-        </a> 
-      </div>
-    );
-  };
-
-
-
-  useEffect(() => {
-    if (address) {
-      console.log('address: ', address);
-    }
-  }, [address])
 
   const handleChange = (file) => {
     const reader = new FileReader();
@@ -85,7 +69,7 @@ const Agent1 = (props) => {
       return;
     }
     setErrorMsg(defaultErrorMsg);
-    const output = await lighthouse.uploadText(e, process.env.lighthouse_key, progressCallback);
+    const output = await lighthouse.uploadText(e, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNLZXkiOiIweDNiMTZiZTA0ZGZkZTkxNTZkN2ViY2MyYmUyMWM2ZjNlMGQwNDM5OTQiLCJpYXQiOjE2NzU2NzcwODUsImV4cCI6MTY3NTcyMDI4NX0.5RF02N6gIecEpN2QnRQ9AZo-FFf3HDs-3vXsbz9hWxc', progressCallback);
     setIpfsHash(output.data.Hash);
     console.log('File status:', output);
     console.log('Visit at https://gateway.lighthouse.storage/ipfs/' + output.data.Hash);
@@ -126,7 +110,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
-      gasLimit: 10000000,
+      gasLimit: 100000000,
     }
 
     await ballotboxContract.methods.newQuestionBallotbox(ipfsHash).send(
@@ -144,8 +128,11 @@ const Agent1 = (props) => {
   }
 
   const createPoll = async () => {
-    const id = BigInt(Math.round(Math.random() * 10 ** 6));
+    const id = BigInt(Math.round(Math.random() * 10 ** 8));
     const merkleTreeDepth = 20;
+
+    console.log('poll id: ', id);
+    setPollId(id);
 
     const transaction = {
       from: address,
@@ -162,7 +149,7 @@ const Agent1 = (props) => {
           setTxHashes([...txHashes, hash]);
           setCreatePollHash(hash);
           setCreatePollConfirmed(false);
-          setPollId(id);
+          
         }
       }
     );
@@ -206,35 +193,38 @@ const Agent1 = (props) => {
         <p>
           Connect to wallet to upload question to FEVM
         </p>
-        {!!address &&
+        {!!address && !createPollConfirmed &&
           <div>
             {
               !deployConfirmed ?
-                <Button onClick={FEVMDeploy} text='Push to Hyperspace' loading={deployHash && !deployConfirmed} />
+                <div>
+                  <Button onClick={FEVMDeploy} text='Push to Hyperspace' loading={deployHash && !deployConfirmed} />
+                  {deployHash && <TxLink txHash={deployHash} />}
+                </div>
               :
-                <Button onClick={createPoll} text='Create Poll' loading={createPollHash && !createPollConfirmed} />
+                <div>
+                  <Button onClick={createPoll} text='Create Poll' loading={createPollHash && !createPollConfirmed} />
+                  {createPollHash && <TxLink txHash={createPollHash} />}
+                </div>
             }
           </div>
         }
         {
           deployConfirmed && createPollConfirmed &&
-          <div
-            className='w-1/3 mx-auto select-none bg-gray-600 rounded-full px-2 hover:cursor-pointer hover:bg-gray-500 duration-150 ease-in-out'
-            onClick={() =>setIpfsHash(null)}
-          >
-            Click to upload another 
+          <div>
+            <p>{`Poll created with ID ${pollId}`}</p>
+            <div
+              className='w-1/3 mx-auto select-none bg-gray-600 rounded-full px-2 hover:cursor-pointer hover:bg-gray-500 duration-150 ease-in-out'
+              onClick={() =>setIpfsHash(null)}
+            >
+              Click to upload another question
+            </div>            
           </div>
+
         }
       </p>}
       <div className='text-sm text-red-400'>
         {errorMsg}
-      </div>
-      <div>
-        {txHashes.map((hash) => {
-          <div key={hash}>
-            <TxWidget txHash={hash} />
-          </div>
-        })}
       </div>
     </div>
   )
