@@ -110,8 +110,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
-      gasPrice: 10000000000,
-      gasLimit: 100000000,
+      gasLimit: 10000000,
     }
 
     await ballotboxContract.methods.newQuestionBallotbox(ipfsHash).send(
@@ -138,7 +137,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
-      gasLimit: 100000000,
+      gasLimit: 10000000,
     }
 
     await ballotboxContract.methods.createPollBallotbox(id, merkleTreeDepth).send(

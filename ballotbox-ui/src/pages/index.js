@@ -19,8 +19,9 @@ export default function Home() {
   const [txHashes, setTxHashes] = useState([]);
 
   const ballotbox_abi = ballotbox.abi;
-  const ballotboxAddress = '0x6eEb802EADB62E0B9616c71D2e958381d2a977D5'; // shouldn't hard code this, make sure to change later :)
-
+  // shouldn't hard code this, make sure to change later :)
+  // const ballotboxAddress = '0x6eEb802EADB62E0B9616c71D2e958381d2a977D5'; // hyperspace 
+  const ballotboxAddress = '0x5b69a277dA35ACB038ac8a6d229980669eaC64A5'; // mumbai
   useEffect(() => {
     if (provider) {
       const web3 = new Web3(provider);

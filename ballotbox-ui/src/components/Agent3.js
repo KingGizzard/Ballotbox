@@ -3,7 +3,7 @@ import Button from "./Button";
 import TxLink from "./TxLink";
 
 const Agent3 = (props) => {
-  const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes } = props;
+  const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes, web3 } = props;
 
   const [requestDataHash, setRequestDataHash] = useState(null);
   const [requestDataConfirmed, setRequestDataConfirmed] = useState(false);
@@ -22,6 +22,36 @@ const Agent3 = (props) => {
     to: ballotboxAddress,
     gasLimit: 10000000
   }
+
+  const checkTx = async (hash) => {
+    const receipt = await web3.eth.getTransactionReceipt(hash);
+    if (receipt) {
+      if (receipt.blockNumber) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (requestDataHash && !requestDataConfirmed) {
+        checkTx(requestDataHash).then((status) => {
+          if (status) {
+            setRequestDataConfirmed(true);
+          }
+        })
+      }
+      if (readResultHash && !readResultConfirmed) {
+        checkTx(readResultHash).then((status) => {
+          if (status) {
+            setReadResultConfirmed(true);
+          }
+        })
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [requestDataHash, requestDataConfirmed, readResultHash, readResultConfirmed]);
 
   const requestData = async () => {
     if (!CID) return setErrorMessage('Please enter a CID');

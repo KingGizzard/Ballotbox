@@ -31,6 +31,13 @@ const Header = (props) => {
         blockExplorer: "https://hyperspace.filfox.info/en",
         ticker: "tFIL",
         tickerName: "Test Filecoin",
+        /*chainNamespace: CHAIN_NAMESPACES.EIP155,
+        chainId: "0x13881",
+        rpcTarget: "https://rpc-mumbai.maticvigil.com",
+        displayName: "Mumbai Testnet",
+        blockExplorer: "https://mumbai.polygonscan.com/",
+        ticker: "MATIC",
+        tickerName: "MATIC",*/
       },
       clientId: "BGpfvIVo7dEpVFanD8Vw_xBRWSEwININ1VTSBs7GVZPc2vkoNof-B-pCXEPipi3ReT03yQyORxM7D0pwcxHNZH4" // get from https://dashboard.web3auth.io
     // get from https://dashboard.web3auth.io

@@ -3,9 +3,10 @@ import Button from "./Button";
 import { Identity } from "@semaphore-protocol/identity"
 import TxLink from "./TxLink";
 import { formatBytes32String } from "@ethersproject/strings";
+import { produceZKProof } from "./utils/createZKP";
 
 const Agent2 = (props) => {
-  const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes } = props;
+  const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes, web3 } = props;
 
   const [pollId, setPollId] = useState(null);
   const [pollIdConfirmed, setPollIdConfirmed] = useState(null);
@@ -29,6 +30,50 @@ const Agent2 = (props) => {
     to: ballotboxAddress,
     gasLimit: 10000000
   }
+
+  const checkTx = async (hash) => {
+    const receipt = await web3.eth.getTransactionReceipt(hash);
+    if (receipt) {
+      if (receipt.blockNumber) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (addVoterHash && !addVoterConfirmed) {
+        checkTx(addVoterHash).then((status) => {
+          if (status) {
+            setAddVoterConfirmed(true);
+          }
+        })
+      }
+      if (startPollHash && !startPollConfirmed) {
+        checkTx(startPollHash).then((status) => {
+          if (status) {
+            setStartPollConfirmed(true);
+          }
+        })
+      }
+      if (castVoteHash && !castVoteConfirmed) {
+        checkTx(castVoteHash).then((status) => {
+          if (status) {
+            setCastVoteConfirmed(true);
+          }
+        })
+      }
+      if (endPollHash && !endPollConfirmed) {
+        checkTx(endPollHash).then((status) => {
+          if (status) {
+            setEndPollConfirmed(true);
+          }
+        })
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [addVoterHash, addVoterConfirmed, startPollHash, startPollConfirmed, castVoteHash, castVoteConfirmed, endPollHash, endPollConfirmed]);
 
   const addVoter = async () => {
     if (addVoterHash) return;
@@ -64,7 +109,24 @@ const Agent2 = (props) => {
 
   const castVote = async () => {
     if (castVoteHash) return;
-    // todo
+
+    const dummyArray = [0, 1];
+    const dummyVoter = [0];
+    const proof = await produceZKProof(BigInt(pollId), vote, dummyArray, dummyVoter);
+    const nullifierHash = proof.fullProof.publicSignals.nullifierHash;
+    
+    await ballotboxContract.method.castVoteBallotbox(vote, nullifierHash, BigInt(pollId), proof.solidityProof).send(
+      transaction, function(err, hash) {
+        if (err) {
+          console.log('error: ', err);
+        } else {
+          setTxHashes([...txHashes, hash]);
+          setCastVoteConfirmed(false);
+          setCastVoteHash(hash);
+        }
+      }
+    )
+
     return;
   }
 
