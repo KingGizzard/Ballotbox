@@ -1,0 +1,108 @@
+Compiling your contracts...
+===========================
+> Compiling @openzeppelin\contracts\utils\Context.sol
+> Compiling @semaphore-protocol\contracts\base\SemaphoreConstants.sol
+> Compiling @semaphore-protocol\contracts\base\SemaphoreCore.sol
+> Compiling @semaphore-protocol\contracts\base\SemaphoreGroups.sol
+> Compiling @semaphore-protocol\contracts\extensions\SemaphoreVoting.sol
+> Compiling @semaphore-protocol\contracts\interfaces\ISemaphoreCore.sol
+> Compiling @semaphore-protocol\contracts\interfaces\ISemaphoreGroups.sol
+> Compiling @semaphore-protocol\contracts\interfaces\ISemaphoreVoting.sol
+> Compiling @semaphore-protocol\contracts\interfaces\IVerifier.sol
+> Compiling @semaphore-protocol\contracts\verifiers\Verifier20.sol
+> Compiling @zk-kit\incremental-merkle-tree.sol\Hashes.sol
+> Compiling @zk-kit\incremental-merkle-tree.sol\IncrementalBinaryTree.sol
+> Compiling .\contracts\Ballotbox.sol
+> Compiling .\contracts\migrations\Migrations.sol
+> Compiling .\contracts\semaphore-protocol\Verifier.sol
+> Compiling .\contracts\zk-kit\IncrementalBinaryTree.sol
+> Artifacts written to C:\Users\chenh\Documents\GitHub\Ballotbox\Ballotbox\blockchain\build\contracts
+> Compiled successfully using:
+   - solc: 0.8.4+commit.c7e474f2.Emscripten.clang
+
+Starting migrations...
+======================
+> Network name:    'hyperspace'
+> Network id:      19
+> Block gas limit: 10000000000 (0x2540be400)
+
+
+2_deploy_semaphore.js
+=====================
+
+   Deploying 'Verifier20'
+   ----------------------
+   > transaction hash:    0x400cbb7ea205cb585b073de313d1f215dad272a73939543d68ff8a93aa6c783d
+   > Blocks: 2            Seconds: 56
+   > contract address:    0x4C3fab4023fC2CFABCaf63a5544500F7C83d0809
+   > block number:        59432
+   > block timestamp:     1675631760
+   > account:             0x7E379d280AC80BF9e5D5c30578e165e6c690acC9
+   > balance:             4.5950594144379419
+   > gas used:            32201180 (0x1eb59dc)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   Deploying 'PoseidonT3'
+   ----------------------
+   > transaction hash:    0xc760b1c1a9b7ea117a93ba172cf13053eb824e72cff9e924d13eecab30f688a4
+   > Blocks: 1            Seconds: 52
+   > contract address:    0x4C0ED113c18619aB3F87eABb36fA9748818aBAec
+   > block number:        59434
+   > block timestamp:     1675631820
+   > account:             0x7E379d280AC80BF9e5D5c30578e165e6c690acC9
+   > balance:             4.4693040203813389
+   > gas used:            16349342 (0xf9789e)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   Linking
+   -------
+   * Contract: IncrementalBinaryTree <--> Library: PoseidonT3 (at address: 0x4C0ED113c18619aB3F87eABb36fA9748818aBAec)
+
+   Deploying 'IncrementalBinaryTree'
+   ---------------------------------
+   > transaction hash:    0x62925b6d7ae5ec2970a1445d4dd810f73281b19694468ab9a68f635e91380dcb
+   > Blocks: 1            Seconds: 52
+   > contract address:    0x07013d9Fb3D10819Eb194E79Fd0D82114F84A164
+   > block number:        59436
+   > block timestamp:     1675631880
+   > account:             0x7E379d280AC80BF9e5D5c30578e165e6c690acC9
+   > balance:             4.4054698733223148
+   > gas used:            29843133 (0x1c75ebd)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   Linking
+   -------
+   * Contract: Ballotbox <--> Library: IncrementalBinaryTree (at address: 0x07013d9Fb3D10819Eb194E79Fd0D82114F84A164)
+
+   Deploying 'Ballotbox'
+   ---------------------
+   > transaction hash:    0x84078ee9f617f5d0ef4ae029c55ce0ce72b5206069e93db1162547267dda0198
+   > Blocks: 2            Seconds: 56
+   > contract address:    0x6eEb802EADB62E0B9616c71D2e958381d2a977D5
+   > block number:        59438
+   > block timestamp:     1675631940
+   > account:             0x7E379d280AC80BF9e5D5c30578e165e6c690acC9
+   > balance:             4.2889256020628626
+   > gas used:            65083001 (0x3e11679)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0 ETH
