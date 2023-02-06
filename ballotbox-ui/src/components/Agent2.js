@@ -98,25 +98,25 @@ const Agent2 = (props) => {
                 <div>
                   <p>Enter encryption key to start poll</p>
                   <input onChange={(e) => setEncryptionKey(e.target.value)} />
-                  <Button text='start poll' onClick={startPoll}/>
+                  <Button text='start poll' onClick={startPoll} loading={startPollHash && !startPollConfirmed} />
                   <TxLink txHash={startPollHash} />
                 </div>
                 <div>
                   <p>Enter dummy voter index to add voter</p>
                   <input onChange={(e) => setDummyVoterIndex(e.target.value)} /> 
-                  <Button text='add voter' onClick={addVoter} />
+                  <Button text='add voter' onClick={addVoter} loading={addVoterHash && !addVoterConfirmed} />
                   <TxLink txHash={addVoterHash} />
                 </div>
                 <div>
                   <p>Enter vote</p>
                   <input onChange={(e) => setVote(e.target.value)} />
-                  <Button text='cast vote' onClick={castVote} />
+                  <Button text='cast vote' onClick={castVote} loading={castVoteHash && !castVoteConfirmed} />
                   <TxLink txHash={castVoteHash} />
                 </div>
                 <div>
                   <p>Enter decryption key to end poll</p>
                   <input onChange={(e) => setDecryptionKey(e.target.value)} />
-                  <Button text='end poll' onClick={endPoll} />
+                  <Button text='end poll' onClick={endPoll} loading={endPollHash && !endPollConfirmed} />
                   <TxLink txHash={endPollHash} />
                 </div>
               </div>
