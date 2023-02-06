@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import { Identity } from "@semaphore-protocol/identity"
 import TxLink from "./TxLink";
+import { formatBytes32String } from "@ethersproject/strings";
 
 const Agent2 = (props) => {
   const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes } = props;
@@ -30,6 +31,7 @@ const Agent2 = (props) => {
   }
 
   const addVoter = async () => {
+    if (addVoterHash) return;
     const identity = new Identity(dummyVoterIndex.toString());
 
     await ballotboxContract.methods.addVoterBallotbox(BigInt(pollId), identity.commitment).send(
@@ -46,7 +48,7 @@ const Agent2 = (props) => {
   }
 
   const startPoll = async () => {
-    console.log(encryptionKey)
+    if (startPollHash) return;
     await ballotboxContract.methods.startPollBallotbox(BigInt(pollId), BigInt(encryptionKey)).send(
       transaction, function(err, hash) {
         if (err) {
@@ -61,11 +63,13 @@ const Agent2 = (props) => {
   }
 
   const castVote = async () => {
+    if (castVoteHash) return;
     // todo
     return;
   }
 
   const endPoll = async () => {
+    if (endPollHash) return;
     await ballotboxContract.methods.endPollBallotbox(BigInt(pollId), decryptionKey).send(
       transaction, function(err, hash) {
         if (err) {
@@ -96,7 +100,7 @@ const Agent2 = (props) => {
                   <input onChange={(e) => setEncryptionKey(e.target.value)} />
                   <Button text='start poll' onClick={startPoll}/>
                   <TxLink txHash={startPollHash} />
-                </div>                
+                </div>
                 <div>
                   <p>Enter dummy voter index to add voter</p>
                   <input onChange={(e) => setDummyVoterIndex(e.target.value)} /> 

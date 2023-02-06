@@ -110,6 +110,7 @@ const Agent1 = (props) => {
     const transaction = {
       from: address,
       to: ballotboxAddress,
+      gasPrice: 10000000000,
       gasLimit: 100000000,
     }
 
