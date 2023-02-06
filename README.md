@@ -89,6 +89,6 @@ lighthouse-web3 api-key --new
 
 ## libraries
 
-> explanations on [semaphore's](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
+> explanations on the [semaphore](https://semaphore.appliedzkp.org/) zero knowledge proof libraries 
 
 > explanation of [lighthouse-sdk](https://docs.lighthouse.storage/lighthouse-1/) for file storage
