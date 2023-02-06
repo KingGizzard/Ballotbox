@@ -69,7 +69,7 @@ const Agent1 = (props) => {
       return;
     }
     setErrorMsg(defaultErrorMsg);
-    const output = await lighthouse.uploadText(e, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNLZXkiOiIweDNiMTZiZTA0ZGZkZTkxNTZkN2ViY2MyYmUyMWM2ZjNlMGQwNDM5OTQiLCJpYXQiOjE2NzU2NzcwODUsImV4cCI6MTY3NTcyMDI4NX0.5RF02N6gIecEpN2QnRQ9AZo-FFf3HDs-3vXsbz9hWxc', progressCallback);
+    const output = await lighthouse.uploadText(e, process.env.lighthouseKey, progressCallback);
     setIpfsHash(output.data.Hash);
     console.log('File status:', output);
     console.log('Visit at https://gateway.lighthouse.storage/ipfs/' + output.data.Hash);

@@ -44,7 +44,9 @@ lighthouse-web3 api-key --new
 
 ## protocol
 
-> use these directories in order
+> note: this section can be used in a self contained manner
+
+> > use these directories in order
 
 ### [blockchain](./blockchain/)
 
@@ -78,11 +80,20 @@ lighthouse-web3 api-key --new
 -----
 -----
 
+### [UI](./ballotbox-ui/)
+
+> This repo contains a guide on running the system with a front-end included
+
+-----
+-----
+-----
+
 ## resources
 
 > use [hyperspace-faucet](https://hyperspace.yoga/#faucet) to fund your accounts in `ENV.json`
 
 > [hyperspace-explorer](https://hyperspace.filfox.info/)
+
 > [hyperspace-explorer-alternative](https://explorer.glif.io/)
 
 -----

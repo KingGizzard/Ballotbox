@@ -1,3 +1,17 @@
+> in a console, run:
+
+```
+npm i
+```
+
+> note: make sure that the [network config](./next.config.js) is matching with the config in the [ENV.json file](../ENV.json). Make sure also that the `ballotboxAddress` field in the [network config](./next.config.js) is matching with the address of your [deployed contract](../blockchain//build//filecoin//ballotbox%3Ahyperspace.address). We are planning to seperate these repositories, which is why there is not a unified file root right now.
+
+> note++: you should follow the [video-guide](https://ethglobal.com/showcase/ballotbox-23fge) to test the system for yourself using this UI page.
+
+-----
+-----
+-----
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

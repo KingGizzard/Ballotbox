@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Button from "./Button";
 
 import { Web3Auth } from "@web3auth/modal";
-import { CHAIN_NAMESPACES } from "@web3auth/base";
-import Web3 from 'web3';
 
 const Header = (props) => {
   const { show, focus, setProvider, provider, address, setAddress } = props;
@@ -12,34 +10,10 @@ const Header = (props) => {
     return address ? address.slice(0, 6) + '...' + address.slice(-4) : '';
   };
 
-
-
-  console.log('address: ', address)
-  
   const web3AuthConnect = async () => {
     const web3auth = new Web3Auth({
-      chainConfig: {
-        /*
-          you can pass your own chain configs here
-          by default it will only chainId is required for supported networks
-          such as [rinkeby, ropsten, goerli, kovan]
-        */
-        chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: "0xC45",
-        rpcTarget: "https://filecoin-hyperspace.chainstacklabs.com/rpc/v1",
-        displayName: "Filecoin Hyperspace",
-        blockExplorer: "https://hyperspace.filfox.info/en",
-        ticker: "tFIL",
-        tickerName: "Test Filecoin",
-        /*chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: "0x13881",
-        rpcTarget: "https://rpc-mumbai.maticvigil.com",
-        displayName: "Mumbai Testnet",
-        blockExplorer: "https://mumbai.polygonscan.com/",
-        ticker: "MATIC",
-        tickerName: "MATIC",*/
-      },
-      clientId: "BGpfvIVo7dEpVFanD8Vw_xBRWSEwININ1VTSBs7GVZPc2vkoNof-B-pCXEPipi3ReT03yQyORxM7D0pwcxHNZH4" // get from https://dashboard.web3auth.io
+      chainConfig: process.env.chainConfig,
+      clientId: process.env.web3AuthClientId // get from https://dashboard.web3auth.io
     // get from https://dashboard.web3auth.io
     })
     await web3auth.initModal();

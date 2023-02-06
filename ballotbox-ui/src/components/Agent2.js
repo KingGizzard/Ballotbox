@@ -3,7 +3,7 @@ import Button from "./Button";
 import { Identity } from "@semaphore-protocol/identity"
 import TxLink from "./TxLink";
 import { formatBytes32String } from "@ethersproject/strings";
-import { generateProof, packToSolidityProof } from "@semaphore-protocol/proof";
+//import { generateProof, packToSolidityProof } from "@semaphore-protocol/proof";
 import { Group } from "@semaphore-protocol/group";
 import * as dotenv from "dotenv";
 dotenv.config({ path: '../../.env' });
