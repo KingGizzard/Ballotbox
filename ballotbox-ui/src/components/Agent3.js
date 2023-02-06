@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
+import TxLink from "./TxLink";
 
 const Agent3 = (props) => {
   const { address, ballotboxContract, ballotboxAddress, setTxHashes, txHashes } = props;
@@ -9,6 +10,8 @@ const Agent3 = (props) => {
 
   const [readResultHash, setReadResultHash] = useState(null);
   const [readResultConfirmed, setReadResultConfirmed] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [result, setResult] = useState(null);
 
@@ -21,7 +24,8 @@ const Agent3 = (props) => {
   }
 
   const requestData = async () => {
-    await ballotboxContract.methods.requestData(CID, 'me@me.me').send(
+    if (!CID) return setErrorMessage('Please enter a CID');
+    await ballotboxContract.methods.requestData(CID, 'me@me.me').send( // dummy email
       transaction, function(err, hash) {
         if (err) {
           console.log('error: ', err);
@@ -41,16 +45,19 @@ const Agent3 = (props) => {
   }
 
   return (
-    <div>
+    <div className="w-1/2 mx-auto">
       { 
         !!address ?
           <div>
             <div>
               Enter CID of data to request:
             </div>
+            <textarea value={CID} onChange={(e) => setCID(e.target.value)} className='w-1/2' />
             <Button text={'Request Data'} onClick={requestData} loading={requestDataHash && !requestDataConfirmed} />
+            <TxLink txHash={requestDataHash} />
             <Button text={'Read Result'} onClick={readResult} loading={readResultHash && !readResultConfirmed} />
             <div>{`result: ${result}`}</div>
+            <div className="text-red-400 text-xs">{errorMessage}</div>
           </div>
         : 
           <div>
